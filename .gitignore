@@ -1,0 +1,16 @@
+# WebStorm & JetBrains IDEs
+.idea/
+*.iml
+
+# macOS system files
+.DS_Store
+
+# Node/npm (if you ever add tooling)
+node_modules/
+
+# Jekyll artifacts (just in case)
+_site/
+.sass-cache/
+
+# System temp
+*.log

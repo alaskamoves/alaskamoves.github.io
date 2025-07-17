@@ -1,5 +1,16 @@
 [
   {
+    "title": "Concealed",
+    "slug": "concealed",
+    "publish_date": "2025-07-16",
+    "medium_url": "https://medium.alaskamoves.us/concealed-24e76159356c",
+    "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250716-concealed.html",
+    "excerpt": "Just carry it.",
+    "tags": ["ethics", "philosophy", "politics"],
+    "instagram_url": null,
+    "published": false
+  },
+  {
     "title": "Why This Page Leaves Titles",
     "slug": "why-this-page-leaves-titles",
     "publish_date": "2025-07-13",
@@ -26,7 +37,7 @@
     "slug": "a-republic-of-rust-belt-mechanics",
     "publish_date": "2025-07-06",
     "medium_url": "https://medium.alaskamoves.us/a-republic-of-rust-belt-mechanics-05e8da5af91f",
-    "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250706-a-republic-of-rust-belt-mechanics-in-line.html",
+    "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250706-a-republic-of-rust-belt-mechanics.html",
     "excerpt": "The liftgate becomes the hinge of the modern social contract...",
     "tags": ["autonomy", "republicanism", "systems theory"],
     "instagram_url": null,

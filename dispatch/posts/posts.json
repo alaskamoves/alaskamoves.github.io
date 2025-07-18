@@ -1,5 +1,16 @@
 [
   {
+    "title": "Build, Maintain, and Document",
+    "slug": "build-maintain-and-document",
+    "publish_date": "2025-07-17",
+    "medium_url": "https://medium.alaskamoves.us/build-maintain-and-document-20144c6cb0bb",
+    "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250717-build-maintain-and-document.html",
+    "excerpt": "A note on the structures that outlast their creators.",
+    "tags": ["building", "maintenance", "documentation"],
+    "instagram_url": null,
+    "published": false
+  },
+  {
     "title": "Concealed",
     "slug": "concealed",
     "publish_date": "2025-07-16",
@@ -8,7 +19,7 @@
     "excerpt": "Just carry it.",
     "tags": ["ethics", "philosophy", "politics"],
     "instagram_url": null,
-    "published": false
+    "published": true
   },
   {
     "title": "Why This Page Leaves Titles",
@@ -19,7 +30,7 @@
     "excerpt": "Not untitled, just unclaimed.",
     "tags": ["ethics", "philosophy", "politics"],
     "instagram_url": null,
-    "published": false
+    "published": true
   },
   {
     "title": "Why RSA Clicks?",

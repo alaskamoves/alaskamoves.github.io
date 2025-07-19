@@ -27,7 +27,34 @@ a:hover {
     text-decoration: underline;
 }
 
-.footer-nav {
+.mirror-links a {
+  display: inline;
+  color: #999;
+  text-decoration: none;
+  margin-left: 1ch;
+  font-size: 0.8rem;
+}
+
+.mirror-links a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.site-footer {
     margin-top: 2rem;
-    font-size: 0.9rem;
+    padding-top: 1rem;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+}
+
+.footer-nav a {
+    display: inline;
+    color: #666;
+    margin: 0 0.5rem;
+    text-decoration: none;
+}
+
+.footer-nav a:hover {
+    color: #aaa;
 }

@@ -7,7 +7,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250719-acquisitions-and-inquisitions.html",
     "excerpt": "On the inquiries that led me to acquire.",
     "tags": ["acquisitions", "maintenance", "inquisitions"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/acquisitions-and-inquisitions",
     "published": true
   },
   {
@@ -18,7 +18,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250717-build-maintain-and-document.html",
     "excerpt": "A note on the structures that outlast their creators.",
     "tags": ["building", "maintenance", "documentation"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/build-maintain-and-document",
     "published": false
   },
   {
@@ -29,7 +29,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250716-concealed.html",
     "excerpt": "Just carry it.",
     "tags": ["ethics", "philosophy", "politics"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/concealed",
     "published": true
   },
   {
@@ -40,18 +40,18 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250713-why-this-page-leaves-titles.html",
     "excerpt": "Not untitled, just unclaimed.",
     "tags": ["ethics", "philosophy", "politics"],
-    "instagram_url": null,
+    "substack_url": null,
     "published": true
   },
   {
-    "title": "Why RSA Clicks?",
+    "title": "Why RSA Clicks",
     "slug": "why-rsa-clicks",
     "publish_date": "2025-07-11",
     "medium_url": "https://medium.alaskamoves.us/why-rsa-clicks-4eea96379b4e",
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250711-why-rsa-clicks.html",
     "excerpt": "A theoretical dispatch on cryptographic trust, political form, and the architecture of recognition.",
     "tags": ["cryptography", "trust", "infrastructure"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/why-rsa-clicks",
     "published": true
   },
   {
@@ -62,7 +62,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250706-a-republic-of-rust-belt-mechanics.html",
     "excerpt": "The liftgate becomes the hinge of the modern social contract...",
     "tags": ["autonomy", "republicanism", "systems theory"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/a-republic-of-rust-belt-mechanics",
     "published": true
   },
   {
@@ -73,7 +73,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250705-the-pig-the-dog-and-man.html",
     "excerpt": "Animal Farm by Orwell remastered.",
     "tags": ["orwell", "political philosophy", "animal farm"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/the-pig-the-dog-and-man",
     "published": true
   },
   {
@@ -84,7 +84,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250705-why-i-learn.html",
     "excerpt": "The credentials were only a means to an end: comprehension.",
     "tags": ["education", "philosophy", "logistics"],
-    "instagram_url": null,
+    "substack_url": null,
     "published": true
   },
   {
@@ -95,7 +95,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250701-properly-relieved.html",
     "excerpt": "On discharge, duty, and the burdens no form absolves",
     "tags": ["veterans affairs", "political philosophy", "logistics"],
-    "instagram_url": null,
+    "substack_url": null,
     "published": true
   },
   {
@@ -106,7 +106,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250621-sisyphus-didnt-have-an-apple-watch.html",
     "excerpt": "No data. No cloud-sync. Just the rock. And you.",
     "tags": ["existentialism", "philosophy", "mindfulness"],
-    "instagram_url": null,
+    "substack_url": null,
     "published": true
   },
   {
@@ -117,7 +117,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250621-satori-at-1.html",
     "excerpt": "Battery dying. But me? Alive.",
     "tags": ["zen", "minimalism", "mindfulness"],
-    "instagram_url": null,
+    "substack_url": null,
     "published": true
   },
   {
@@ -128,7 +128,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250621-against-the-cogito.html",
     "excerpt": "Dubitum, ergo cogito, ergo sum.",
     "tags": ["mathematics", "philosophy", "politics"],
-    "instagram_url": null,
+    "substack_url": null,
     "published": true
   },
   {
@@ -139,7 +139,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250620-dasein-and-da-zeit.html",
     "excerpt": "Heidegger called it Sein und Zeit. I call it a shift. A route. A reason to keep moving.",
     "tags": ["existentialism", "political philosophy", "ontology"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/dasein-and-da-zeit",
     "published": true
   },
   {
@@ -150,7 +150,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250619-why-i-yearn.html",
     "excerpt": "A Eulogy on Gas, Grass, and Gig Apps",
     "tags": ["learning", "philosophy", "economics"],
-    "instagram_url": null,
+    "substack_url": null,
     "published": true
   },
   {
@@ -161,7 +161,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250522-anomie-philosophy-and-the-remington.html",
     "excerpt": "A Reflection on Exit, Voice, and Loyalty in a Time of Structural Disappearance",
     "tags": ["anomie", "philosophy", "politics"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/anomie-philosophy-and-the-remington",
     "published": true
   },
   {
@@ -172,7 +172,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20240527-surviving-a-sentence.html",
     "excerpt": "the author writes for the reader.",
     "tags": ["grammar", "philosophy", "philology"],
-    "instagram_url": null,
+    "substack_url": "https://alaskamoves.substack.com/p/surviving-a-sentence",
     "published": true
   },
   {
@@ -183,7 +183,7 @@
     "dispatch_url": "https://alaskamoves.us/dispatch/posts/20240525-fear-uncertainty-and-denial.html",
     "excerpt": "Relating economics and ethics via the political.",
     "tags": ["ethics", "political philosophy", "economics"],
-    "instagram_url": null,
+    "substack_url": null,
     "published": true
   }
 ]

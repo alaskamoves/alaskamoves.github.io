@@ -51,6 +51,15 @@ BODY = """
     <p><a href="../index.html"><code>return.dispatch(self) ↩︎</code></a></p>
     <p><a href="../../index.html"><code>return.(self) ↩︎</code></a></p>
 </footer>
+
+<footer class="site-footer">
+    &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+    <nav class="footer-nav">
+        <a href="../terms.html">onlyCrumbs</a>
+        <a href="../pricing.html">pricing</a>
+        <a href="../dispatch.html">dispatch</a>
+    </nav>
+</footer>
 """
 TAGS = ["ethics", "philosophy", "politics"]
 DESCRIPTION = SUBTITLE
@@ -66,8 +75,9 @@ filename_base = f"{yyyymmdd}-{slug}"
 html_path = DRAFTS_DIR / f"{filename_base}.html"
 json_path = DRAFTS_DIR / f"{filename_base}.json"
 
-dispatch_url = f"https://alaskamoves.us/dispatch/drafts/{filename_base}.html"
-canonical = f"https://alaskamoves.us/dispatch/posts/{filename_base}.html"
+dispatch_url = f"https://alaskamoves.us/dispatch/posts/{filename_base}.html"
+medium_url = f"https://medium.alaskamoves.us/{slug}"
+substack_url = f"https://alaskamoves.substack.com/p/{slug}"
 
 # HTML content
 html = f"""<!DOCTYPE html>
@@ -91,12 +101,11 @@ metadata = {
     "title": TITLE,
     "slug": slug,
     "publish_date": date,
-    "medium_url": None,
+    "medium_url": medium_url,
     "dispatch_url": dispatch_url,
-    "canonical": canonical,
     "excerpt": DESCRIPTION,
     "tags": TAGS,
-    "instagram_url": None,
+    "substack_url": substack_url,
     "published": PUBLISHED
 }
 

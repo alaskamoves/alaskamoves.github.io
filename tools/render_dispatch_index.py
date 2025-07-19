@@ -29,24 +29,37 @@ html_template = """<!DOCTYPE html>
   <p><em>selected writings filed in operational order</em></p>
 
   <div class="links">
-    <ul>
     {% for post in posts %}
-      <li>
+    <li>
         <a href="{{ post.dispatch_url | replace('https://alaskamoves.us/dispatch/', '') }}" target="_self">
           {{ post.title }}
-        </a>{% if post.medium_url %}
-        <a href="{{ post.medium_url }}" target="_self" style="font-size: 0.85em; margin-left: 0.4ch; text-decoration: none;">
-          [medium]
-        </a>{% endif %}
-      </li>
+        </a>
+        <div class="mirror-links">
+            {% if post.medium_url %}
+                <a href="{{ post.medium_url }}" target="_self">[MEDIUM]</a>
+            {% endif %}
+            {% if post.substack_url %}
+                <a href="{{ post.substack_url }}" target="_self">[SUBSTACK]</a>
+            {% endif %}
+        </div>
+    </li>
     {% endfor %}
-    </ul>
   </div>
 
   <div class="footer-nav" style="margin-top: 2rem;">
     <a href="../index.html" target="_self" rel="noopener noreferrer">return.(self) ↩︎</a>
   </div>
 </div>
+
+<footer class="site-footer">
+    &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+    <nav class="footer-nav">
+        <a href="../terms.html">onlyCrumbs</a>
+        <a href="../pricing.html">pricing</a>
+        <a href="../dispatch.html">dispatch</a>
+    </nav>
+</footer>
+  
 </body>
 </html>"""
 

@@ -14,3 +14,4 @@ _site/
 
 # System temp
 *.log
+/assets/geo/tiger_zcta_2024

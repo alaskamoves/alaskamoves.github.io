@@ -3,7 +3,7 @@ from datetime import datetime
 from jinja2 import Template
 
 # Load posts.json
-with open("../dispatch/posts/posts.json", "r") as f:
+with open("../../dispatch/db/posts.json", "r") as f:
     posts = json.load(f)
 
 # Sort posts by publish_date descending
@@ -68,7 +68,7 @@ template = Template(html_template)
 rendered_html = template.render(posts=posts)
 
 # Save to index.html
-with open("../dispatch/index.html", "w", encoding="utf-8") as f:
+with open("../../dispatch/index.html", "w", encoding="utf-8") as f:
     f.write(rendered_html)
 
 print("✔️ index.html generated successfully.")

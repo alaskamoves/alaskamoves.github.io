@@ -67,7 +67,8 @@ PUBLISHED = False
 # =======================
 
 # Paths and metadata
-DRAFTS_DIR = Path("../dispatch/drafts")
+DRAFTS_DIR = Path("../tools/dispatch/drafts/")
+DRAFTS_DIR.mkdir(parents=True, exist_ok=True)
 slug = re.sub(r'[^a-z0-9]+', '-', TITLE.lower()).strip('-')
 date = datetime.date.today().strftime("%Y-%m-%d")
 yyyymmdd = date.replace("-", "")

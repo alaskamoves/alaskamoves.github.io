@@ -55,9 +55,9 @@ BODY = """
 <footer class="site-footer">
     &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
     <nav class="footer-nav">
-        <a href="../terms.html">onlyCrumbs</a>
-        <a href="../pricing.html">pricing</a>
-        <a href="../dispatch.html">dispatch</a>
+        <a href="../../terms.html">onlyCrumbs</a>
+        <a href="../../pricing.html">pricing</a>
+        <a href="../../dispatch.html">dispatch</a>
     </nav>
 </footer>
 """

@@ -1,5 +1,16 @@
 [
   {
+    "title": "Return to Sender",
+    "slug": "return-to-sender",
+    "publish_date": "2025-07-19",
+    "medium_url": "https://medium.alaskamoves.us/return-to-sender-9d93be7f2f19",
+    "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250719-return-to-sender.html",
+    "excerpt": "A dispatch for those who've waited for confirmation.",
+    "tags": ["philosophy", "logistics", "economics"],
+    "substack_url": "https://alaskamoves.substack.com/p/return-to-sender",
+    "published": false
+  },
+  {
     "title": "Routers and Routes",
     "slug": "routers-and-routes",
     "publish_date": "2025-07-19",

@@ -58,3 +58,16 @@ a:hover {
 .footer-nav a:hover {
     color: #aaa;
 }
+
+pre code {
+  background-color: #111;
+  color: #ccc;
+  padding: 0.2em;
+  display: block;
+  border-left: 4px solid #666;
+  font-family: monospace;
+  font-size: 0.9em;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}

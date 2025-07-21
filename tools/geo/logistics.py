@@ -22,6 +22,7 @@ AVG_SPEED = 25            # mph under working conditions
 FUEL_RATE = 3.19          # Default gas price until better intel rolls in.
 LOAD_MULTIPLIER = 1.0     # Starts at 1.0 (small package). Bigger loads? Bump it.
 DB_DIR = Path("../../geo/db")  # The vault of regional ZIP knowledge.
+EARTH_RADIUS_MI = 3958.8  # Radius of Earth in miles
 
 # ─── Derived Metrics ──────────────────────────────────────────────────────────
 DAILY_GALLONS = MAX_MILES / MPG                      # ≈ 12 gallons on a 300mi day
@@ -50,10 +51,9 @@ def haversine(lat1, lon1, lat2, lon2):
     Calculates the crow-flies distance between two GPS coordinates.
     Earth is round, math is magic, mileage is money.
     """
-    R = 3958.8  # Radius of Earth in miles
     dlat, dlon = radians(lat2 - lat1), radians(lon2 - lon1)
     a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2)**2
-    return 2 * R * atan2(sqrt(a), sqrt(1 - a))
+    return 2 * EARTH_RADIUS_MI * atan2(sqrt(a), sqrt(1 - a))
 
 def lookup_distance(zip1, zip2):
     """

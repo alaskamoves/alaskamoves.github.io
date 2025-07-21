@@ -1,6 +1,6 @@
 {
-  "pickup": "44060",
-  "dropoff": "44111",
-  "payout": 0,
+  "pickup": "44111",
+  "dropoff": "44106",
+  "payout": 70,
   "timestamp": "2025-07-20T19:04:00"
 }

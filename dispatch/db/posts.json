@@ -1,5 +1,16 @@
 [
   {
+    "title": "Lights. Camera. Action.",
+    "slug": "lights-camera-action",
+    "publish_date": "2025-07-22",
+    "medium_url": "https://medium.alaskamoves.us/lights-camera-action-a230fcb9e111",
+    "dispatch_url": "https://alaskamoves.us/dispatch/posts/20250722-lights-camera-action.html",
+    "excerpt": "Subjects, Objects, and the Always-On Sentencing of the Networked Era.",
+    "tags": ["ethics", "philosophy", "linguistics"],
+    "substack_url": "https://alaskamoves.substack.com/p/lights-camera-action",
+    "published": true
+  },
+  {
     "title": "Return to Sender",
     "slug": "return-to-sender",
     "publish_date": "2025-07-19",
@@ -8,7 +19,7 @@
     "excerpt": "A dispatch for those who've waited for confirmation.",
     "tags": ["philosophy", "logistics", "economics"],
     "substack_url": "https://alaskamoves.substack.com/p/return-to-sender",
-    "published": false
+    "published": true
   },
   {
     "title": "Routers and Routes",
@@ -19,7 +30,7 @@
     "excerpt": "On those who route traffic and the routes in question.",
     "tags": ["economics", "philosophy", "politics"],
     "substack_url": "https://alaskamoves.substack.com/p/routers-and-routes",
-    "published": false
+    "published": true
   },
   {
     "title": "Acquisitions and Inquisitions",
@@ -41,7 +52,7 @@
     "excerpt": "A note on the structures that outlast their creators.",
     "tags": ["building", "maintenance", "documentation"],
     "substack_url": "https://alaskamoves.substack.com/p/build-maintain-and-document",
-    "published": false
+    "published": true
   },
   {
     "title": "Concealed",

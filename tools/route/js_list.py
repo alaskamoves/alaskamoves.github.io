@@ -5,7 +5,7 @@ from tools.geo.logistics import haversine, FOB_ZIP, DB_DIR
 RADIUS = 100  # miles
 STATE_PREFIX = FOB_ZIP[:2]
 STATE_FILE = DB_DIR / f"{STATE_PREFIX}.json"
-OUTPUT_FILE = Path("../../route/db/44107.js")
+OUTPUT_FILE = Path("../../pricing/db/44107.js")
 
 def main():
     with open(STATE_FILE) as f:

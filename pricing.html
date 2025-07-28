@@ -2,25 +2,186 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pricing</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Could Alaska Move?</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: monospace;
+      background: #111;
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 90%;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      font-weight: 500;
+      color: #eee;
+    }
+    input, button {
+      font-family: monospace;
+      font-size: 1rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: none;
+      background: #fff;
+      color: #000;
+      margin: 0.2rem;
+    }
+    form label {
+      background: #222;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 300px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+    #output {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #1a1a1a;
+      border-radius: 0.5rem;
+      color: #ccc;
+      white-space: pre-wrap;
+      max-width: 400px;
+      text-align: left;
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+    .footer-nav a {
+      margin: 0 0.5rem;
+      color: #aaa;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-<main class="container">
-  <h1>Pricing</h1>
-  <p>Send me a Benjamin, and I might just send you back with a Jackson.</p>
-  <p>Service not guaranteed, but a narrative certainly is.</p>
-  <p>Thank you for YOUR patience!</p>
+  <div class="container">
+    <h1>Could Alaska Move?</h1>
 
-  <footer class="site-footer">
-    &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
-    <nav class="footer-nav">
-      <a href="terms.html">onlyCrumbs</a>
-      <a href="pricing.html">pricing</a>
-      <a href="dispatch.html">dispatch</a>
-    </nav>
-  </footer>
-</main>
+    <p>Send me a Benjamin, and I might just send you back with a Jackson.</p>
+    <p>Service not guaranteed, but a narrative certainly is.</p>
+    <p>Thank you for YOUR patience!</p>
+    <p><br /></p>
+
+    <form id="routeForm">
+      <label for="src">Pickup ZIP:</label>
+      <input id="src" type="text" value="44111" required />
+
+      <label for="dest">Dropoff ZIP:</label>
+      <input id="dest" type="text" value="44106" required />
+
+      <label for="payout">Payout ($):</label>
+      <input id="payout" type="number" value="71" required />
+
+      <button id="submit">Evaluate Route</button>
+
+      <pre id="output"></pre>
+    </form>
+
+    <!-- ZIP coordinate base -->
+    <script src="pricing/db/44107.js"></script>
+
+    <script>
+      const FOB = "44107";
+      const fuelRate = 3.19;        // $/gallon
+      const hourlyRate = 10.00;      // $/hour
+      const hourlyGallons = 1;      // gallon/hour burn rate
+
+      async function getRoute(zipA, zipB) {
+        const a = zipCoords[zipA];
+        const b = zipCoords[zipB];
+
+        if (!a || !b) throw new Error(`Missing ZIP: ${!a ? zipA : zipB}`);
+
+        const url = `https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=false`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!data.routes || !data.routes.length) throw new Error("Route not found");
+
+        const route = data.routes[0];
+        return {
+          miles: (route.distance / 1609.34).toFixed(2),
+          hours: (route.duration / 3600).toFixed(2),
+        };
+      }
+
+      document.getElementById("routeForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const src = document.getElementById("src").value.trim();
+        const dest = document.getElementById("dest").value.trim();
+        const payout = parseFloat(document.getElementById("payout").value);
+        const output = document.getElementById("output");
+
+        if (!(src in zipCoords && dest in zipCoords)) {
+          output.textContent = "❌ ZIP code(s) not in local database.";
+          return;
+        }
+
+        output.textContent = "🔄 Calculating route, please wait...";
+
+        try {
+          const [leg1, leg2, leg3] = await Promise.all([
+            getRoute(FOB, src),
+            getRoute(src, dest),
+            getRoute(dest, FOB)
+          ]);
+
+          const totalHours = (
+            parseFloat(leg1.hours) +
+            parseFloat(leg2.hours) +
+            parseFloat(leg3.hours)
+          );
+          const totalCost = (totalHours * (fuelRate * hourlyGallons + hourlyRate)).toFixed(2);
+          const goHomeCost = ((parseFloat(leg1.hours) * 2) * (fuelRate + hourlyRate)).toFixed(2);
+          const netGain = (payout - totalCost).toFixed(2);
+          const verdict = parseFloat(netGain) >= 0 ? "✅ TAKE IT" : "❌ SKIP IT";
+
+          output.textContent = `
+🧭 Route Evaluation:
+  From ${src} to ${dest}, ending at FOB (${FOB})
+  Payout Offered: $${payout.toFixed(2)}
+  Cost to Complete: $${totalCost}
+  Cost to Go Home Instead: $${goHomeCost}
+  Net Gain if Taken: $${netGain}
+
+${verdict}
+          `.trim();
+        } catch (err) {
+          output.textContent = "❌ Routing error: " + err.message;
+        }
+      });
+    </script>
+
+    <footer class="site-footer">
+      &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+      <nav class="footer-nav">
+        <a href="terms.html">onlyCrumbs</a>
+        <a href="pricing.html">pricing</a>
+        <a href="dispatch.html">dispatch</a>
+      </nav>
+    </footer>
+  </div>
 </body>
 </html>

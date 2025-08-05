@@ -21,7 +21,7 @@ html_template = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <title>Dispatch</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dispatch.styles">
 </head>
 <body>
 <div class="container">
@@ -54,8 +54,8 @@ html_template = """<!DOCTYPE html>
 <footer class="site-footer">
     &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
     <nav class="footer-nav">
-        <a href="../terms.html">onlyCrumbs</a>
-        <a href="../pricing.html">pricing</a>
+        <a href="../index.html">onlyCrumbs</a>
+        <a href="../index.html">pricing</a>
         <a href="../dispatch.html">dispatch</a>
     </nav>
 </footer>

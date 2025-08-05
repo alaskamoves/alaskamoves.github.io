@@ -18,7 +18,7 @@ HEADER = """<!DOCTYPE html>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Could Alaska Move?</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dispatch.styles">
 </head>
 <body>
   <div class="container">
@@ -44,8 +44,8 @@ HEADER = """<!DOCTYPE html>
   <footer class="site-footer">
     &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
     <nav class="footer-nav">
-      <a href="terms.html">onlyCrumbs</a>
-      <a href="pricing.html">pricing</a>
+      <a href="index.html">onlyCrumbs</a>
+      <a href="index.html">pricing</a>
       <a href="dispatch.html">dispatch</a>
     </nav>
   </footer>

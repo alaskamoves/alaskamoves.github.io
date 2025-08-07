@@ -47,16 +47,16 @@ html_template = """<!DOCTYPE html>
   </div>
 
   <div class="footer-nav" style="margin-top: 2rem;">
-    <a href="../index.html" target="_self" rel="noopener noreferrer">return.(self) ↩︎</a>
+    <a href="https://alaskamoves.us/index.html" target="_self" rel="noopener noreferrer">return.(self) ↩︎</a>
   </div>
 </div>
 
 <footer class="site-footer">
     &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
     <nav class="footer-nav">
-        <a href="../index.html">onlyCrumbs</a>
-        <a href="../index.html">pricing</a>
-        <a href="../index.html">dispatch</a>
+        <a href="https://alaskamoves.us/index.html">onlyCrumbs</a>
+        <a href="https://alaskamoves.us/index.html">pricing</a>
+        <a href="https://alaskamoves.us/index.html">dispatch</a>
     </nav>
 </footer>
   

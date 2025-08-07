@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from tools.geo.logistics import haversine, FOB_ZIP, DB_DIR
+from python.geo.logistics import haversine, FOB_ZIP, DB_DIR
 
 RADIUS = 100  # miles
 STATE_PREFIX = FOB_ZIP[:2]

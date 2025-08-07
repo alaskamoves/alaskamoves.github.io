@@ -1,4 +1,4 @@
-# tools/route/write_inputs.py
+# python/route/write_inputs.py
 # ─────────────────────────────────────────────────────────────────────────────
 # CLI mimic of a web form to collect pickup, dropoff, and payout.
 # Writes inputs.json to the current directory for evaluate.py to consume.

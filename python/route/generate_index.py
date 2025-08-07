@@ -1,4 +1,4 @@
-# tools/route/generate_index.py
+# python/route/generate_index.py
 # ─────────────────────────────────────────────────────────────────────────────
 # Script to generate the index.html page for the route/ directory.
 # Pulls from logistics.py and creates a landing page for gig evaluation.
@@ -46,7 +46,7 @@ HEADER = """<!DOCTYPE html>
     <nav class="footer-nav">
       <a href="index.html">onlyCrumbs</a>
       <a href="index.html">pricing</a>
-      <a href="dispatch.html">dispatch</a>
+      <a href="index.html">dispatch</a>
     </nav>
   </footer>
   </div>

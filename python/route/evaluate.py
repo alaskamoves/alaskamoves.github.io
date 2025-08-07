@@ -1,4 +1,4 @@
-# tools/route/evaluate.py
+# python/route/evaluate.py
 # ─────────────────────────────────────────────────────────────────────────────
 # Offline evaluator: Should you take the gig, or head home?
 # Compares cost to complete a delivery (pickup → dropoff → FOB) vs. cost to go
@@ -7,7 +7,7 @@
 
 import json
 from pathlib import Path
-from tools.geo.logistics import estimate_cost, FOB_ZIP
+from python.geo.logistics import estimate_cost, FOB_ZIP
 
 INPUTS_FILE = Path("../../route/db/inputs.json")
 

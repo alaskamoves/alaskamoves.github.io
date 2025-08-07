@@ -56,7 +56,7 @@ html_template = """<!DOCTYPE html>
     <nav class="footer-nav">
         <a href="../index.html">onlyCrumbs</a>
         <a href="../index.html">pricing</a>
-        <a href="../dispatch.html">dispatch</a>
+        <a href="../index.html">dispatch</a>
     </nav>
 </footer>
   

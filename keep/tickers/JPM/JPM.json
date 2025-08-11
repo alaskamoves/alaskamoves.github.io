@@ -1,0 +1,24 @@
+{
+  "ticker": "JPM",
+  "cik": "0000019617",
+  "companyName": "JPMORGAN CHASE & CO",
+  "latest": {
+    "10-K": {
+      "accession": "0000019617-25-000270",
+      "filingDate": "2025-02-14"
+    },
+    "10-Q": {
+      "accession": "0000019617-25-000615",
+      "filingDate": "2025-08-05"
+    }
+  },
+  "derived": {
+    "fcf0": -42000000000.0,
+    "net_debt": 41989000000.0,
+    "shares": 2797600000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000019617.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "ticker": "F",
+  "cik": "0000037996",
+  "companyName": "FORD MOTOR CO",
+  "latest": {
+    "10-K": {
+      "accession": "0000037996-25-000013",
+      "filingDate": "2025-02-06"
+    },
+    "10-Q": {
+      "accession": "0000037996-25-000147",
+      "filingDate": "2025-07-31"
+    }
+  },
+  "derived": {
+    "fcf0": 6739000000.0,
+    "net_debt": -22644000000.0,
+    "shares": 3960000000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000037996.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json"
+  }
+}

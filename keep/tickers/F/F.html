@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DCF Valuation Calculator</title>
+  <link rel="stylesheet" href="https://alaskamoves.us/styles/css/main.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">DCF – F</h1>
+        <p class="text-zinc-600 dark:text-zinc-300 mt-1">FORD MOTOR CO · Pre-filled from SEC XBRL (companyfacts).</p>
+      </div>
+    </header>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <section class="card p-5 lg:col-span-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="label">Ticker</label>
+            <input id="ticker" class="input" value="F" />
+          </div>
+          <div>
+            <label class="label">Current Share Price</label>
+            <input id="currentPrice" class="number-input" inputmode="decimal" placeholder="11.14" value="11.14" />
+            <p class="hint mt-1">Auto-filled from Stooq prior close.</p>
+          </div>
+
+          <div>
+            <label class="label">Starting Free Cash Flow (FCF₀)</label>
+            <input id="fcf0" class="number-input" inputmode="decimal" value="6739000000" />
+            <p class="hint mt-1">Derived as CFO − |Capex| from latest FY.</p>
+          </div>
+          <div>
+            <label class="label">Projection Years (N)</label>
+            <input id="years" class="number-input" inputmode="numeric" value="5" />
+          </div>
+
+          <div>
+            <label class="label">FCF Growth Rate (annual, %)</label>
+            <input id="growth" class="number-input" inputmode="decimal" value="5" />
+          </div>
+          <div>
+            <label class="label">Terminal Growth (g, %)</label>
+            <input id="terminalGrowth" class="number-input" inputmode="decimal" value="2.5" />
+            <p class="hint mt-1">Conservative long‑run growth (≤ GDP).</p>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="label flex items-center justify-between"> <span>Discount Rate (WACC, %)</span> <span id="discountLabel" class="font-semibold">10.0%</span> </label>
+            <input id="discount" type="range" min="3" max="25" step="0.1" value="10" class="w-full" />
+            <div class="mt-2 grid grid-cols-3 gap-2">
+              <input id="discountBox" class="number-input" inputmode="decimal" value="10" />
+              <button class="btn-ghost" data-bump="-1">–1%</button>
+              <button class="btn-ghost" data-bump="1">+1%</button>
+            </div>
+          </div>
+
+          <div>
+            <label class="label">Net Debt (Debt – Cash)</label>
+            <input id="netDebt" class="number-input" inputmode="decimal" value="-22644000000" />
+          </div>
+          <div>
+            <label class="label">Shares Outstanding</label>
+            <input id="shares" class="number-input" inputmode="decimal" value="3960000000" />
+          </div>
+        </div>
+
+        <div class="mt-6 flex gap-2">
+          <button id="calcBtn" class="btn">Calculate</button>
+          <button id="downloadBtn" class="btn-ghost">Download Assumptions</button>
+          <button id="resetBtn" class="btn-ghost">Reset</button>
+        </div>
+      </section>
+
+      <section class="card p-5 flex flex-col gap-4">
+        <div>
+          <h2 class="text-xl font-semibold mb-2">Results</h2>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800"><div class="hint">Intrinsic Value / Share</div><div id="ivps" class="kpi">—</div></div>
+            <div class="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800"><div class="hint">Upside vs. Current</div><div id="upside" class="kpi">—</div></div>
+            <div class="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800"><div class="hint">Enterprise Value (DCF)</div><div id="ev" class="font-semibold">—</div></div>
+            <div class="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800"><div class="hint">Equity Value</div><div id="equity" class="font-semibold">—</div></div>
+          </div>
+        </div>
+        <div class="h-px bg-zinc-200 dark:bg-zinc-800"></div>
+        <div><h3 class="font-semibold mb-2">DCF Sensitivity (Value/Share vs Discount Rate)</h3><canvas id="chart" height="200"></canvas></div>
+        <details class="mt-2"><summary class="cursor-pointer select-none font-medium">Methodology</summary><div class="mt-2 text-sm text-zinc-600 dark:text-zinc-300 space-y-1"><p>We project FCF for N years with constant growth <em>g</em> and discount at rate <em>r</em>. Terminal value uses Gordon Growth: TV = FCF<sub>N+1</sub> / (r − g<sub>term</sub>). Enterprise value is PV of projected FCFs plus PV(TV). Equity value = Enterprise value − Net Debt. Intrinsic value per share = Equity / Shares.</p><p>Inputs are auto-derived from SEC XBRL where available; you can override any field. Price is the prior close if auto-filled, otherwise enter manually.</p></div></details>
+      </section>
+    </div>
+      
+    <footer class="site-footer">
+
+    <nav class="footer-nav">
+
+        <a  href="https://alaskamoves.us/index.html">
+
+            &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+
+            <br /></a>
+
+        <a href="https://alaskamoves.us/build/index.html">build</a>
+
+        <a href="https://alaskamoves.us/connect/index.html">connect</a>
+
+        <a href="https://alaskamoves.us/dispatch/index.html">dispatch</a>
+
+        <a href="https://alaskamoves.us/exchange/index.html">exchange</a>
+
+        <a href="https://alaskamoves.us/file/index.html">file</a>
+
+    </nav>
+
+    </footer>
+
+</div>
+   
+<script>
+    
+    const $ = (id) => document.getElementById(id);
+    
+    const fmt = new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 });
+    
+    const fmtMoney = (x) => (isFinite(x) ? (x < 0 ? '-' : '') + new Intl.NumberFormat(undefined, 
+        { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(Math.abs(x)) : '—');
+    
+    const fmtPrice = (x) => (isFinite(x) ? new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(x) : '—');
+
+    const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+
+    
+    function parseNum(input) {
+      if (!input) return NaN;
+      
+    const v = parseFloat(String(input).replace(/[\,\s]/g, ''));
+      
+    return isNaN(v) ? NaN : v;
+    }
+
+    
+    function dcf({ fcf0, years, growth, terminalGrowth, discount, netDebt, shares }) {
+      
+    const r = discount / 100;
+      const g = growth / 100;
+      const gt = terminalGrowth / 100;
+      
+    if (r <= gt) return { error: 'Discount rate must exceed terminal growth.' };
+
+      
+    let pvCashflows = 0;
+      
+    let fcf_t = fcf0;
+      
+    for (let t = 1; t <= years; t++) {
+        
+    fcf_t = fcf_t * (1 + g);
+        
+    pvCashflows += fcf_t / Math.pow(1 + r, t);
+      }
+      
+    const fcf_n1 = fcf_t * (1 + gt);
+      
+    const terminalValue = fcf_n1 / (r - gt);
+      
+    const pvTerminal = terminalValue / Math.pow(1 + r, years);
+      
+    const enterprise = pvCashflows + pvTerminal;
+      
+    const equity = enterprise - netDebt;
+      
+    return { pvCashflows, pvTerminal, enterprise, equity };
+    }
+
+    
+    function computeAndRender() {
+      
+    const fcf0 = parseNum($("fcf0").value);
+      
+    const years = Math.round(parseNum($("years").value));
+      
+    const growth = parseNum($("growth").value);
+      
+    const terminalGrowth = parseNum($("terminalGrowth").value);
+      
+    const discount = parseNum($("discountBox").value);
+      
+    const netDebt = parseNum($("netDebt").value);
+      
+    const shares = parseNum($("shares").value);
+      
+    const currentPrice = parseNum($("currentPrice").value);
+
+      
+    if ([fcf0, years, growth, terminalGrowth, discount, netDebt, shares].some(v => !isFinite(v))) {
+        
+    alert('Please fill all required numeric fields.');
+        return;
+      }
+
+      
+    const res = dcf({ fcf0, years, growth, terminalGrowth, discount, netDebt, shares });
+      
+    if (res.error) { alert(res.error); return; }
+
+      const ivps = res.equity / shares;
+      
+    $("ivps").textContent = fmtPrice(ivps);
+      
+    $("ev").textContent = fmtMoney(res.enterprise);
+      
+    $("equity").textContent = fmtMoney(res.equity);
+
+      
+    if (isFinite(currentPrice)) {
+        const upside = (ivps / currentPrice - 1) * 100;
+        
+    const sign = upside >= 0 ? '+' : '';
+        $("upside").textContent = sign + fmt.format(upside) + '%';
+
+    } else {
+        $("upside").textContent = '—';
+      }
+
+      
+    updateChartSensitivity({ fcf0, years, growth, terminalGrowth, netDebt, shares });
+    }
+
+    
+    $("discount").addEventListener('input', (e) => {
+      $("discountBox").value = e.target.value;
+      
+    $("discountLabel").textContent = parseFloat(e.target.value).toFixed(1) + '%';
+    });
+    
+    $("discountBox").addEventListener('input', (e) => {
+      
+    const v = clamp(parseNum(e.target.value), 0.1, 60);
+      $("discount").value = v;
+      
+    $("discountLabel").textContent = parseFloat(v).toFixed(1) + '%';
+    });
+    
+    document.querySelectorAll('[data-bump]').forEach(btn => btn.addEventListener('click', () => {
+      
+    const delta = parseFloat(btn.dataset.bump);
+      
+    const v = clamp(parseNum($("discountBox").value) + delta, 0.1, 60);
+      
+    $("discountBox").value = v.toFixed(1);
+      $("discount").value = v;
+      
+    $("discountLabel").textContent = v.toFixed(1) + '%';
+    }));
+
+    
+    $("calcBtn").addEventListener('click', computeAndRender);
+    
+    $("resetBtn").addEventListener('click', () => { document.querySelectorAll('input').forEach(i => i.value = ''); $("discount").value = 10; $("discountBox").value = 10; $("discountLabel").textContent = '10.0%'; clearOutputs(); });
+
+    $("downloadBtn").addEventListener('click', () => {
+      const payload = {
+        
+    ticker: $("ticker").value || null,
+        currentPrice: parseNum($("currentPrice").value) || null,
+
+    fcf0: parseNum($("fcf0").value) || null,
+        years: parseNum($("years").value) || null,
+        
+    growth: parseNum($("growth").value) || null,
+        
+    terminalGrowth: parseNum($("terminalGrowth").value) || null,
+        
+    discount: parseNum($("discountBox").value) || null,
+        
+    netDebt: parseNum($("netDebt").value) || null,
+        
+    shares: parseNum($("shares").value) || null,
+        
+    timestamp: new Date().toISOString()
+      };
+      
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      
+    const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      
+    a.href = url; a.download = (payload.ticker || 'dcf') + '_assumptions.json';
+      
+    document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    
+    function clearOutputs() {
+      $("ivps").textContent = '—';
+      $("upside").textContent = '—';
+      
+    $("ev").textContent = '—';
+      $("equity").textContent = '—';
+      if (chart) chart.destroy();
+      
+    initChart();
+    }
+
+    let chart;
+    function initChart() {
+      
+    const ctx = document.getElementById('chart').getContext('2d');
+      
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],
+          
+    datasets: [{ label: 'Intrinsic Value / Share', data: [], tension: 0.25, pointRadius: 0 }]
+        },
+
+    options: {
+          responsive: true,
+          
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (ctx) => '$' + Number(ctx.parsed.y).toFixed(2) } } },
+
+    scales: {
+            x: { title: { display: true, text: 'Discount Rate (%)' } },
+            
+    y: { title: { display: true, text: 'Value / Share (USD)' }, beginAtZero: false }
+          
+    }
+        }
+    });
+    }
+
+    
+    function updateChartSensitivity({ fcf0, years, growth, terminalGrowth, netDebt, shares }) {
+      
+    const xs = [];
+      const ys = [];
+      for (let r = 4; r <= 20.01; r += 0.25) {
+        
+    const res = dcf({ fcf0, years, growth, terminalGrowth, discount: r, netDebt, shares });
+        
+    if (res.error) { continue; }
+        const ivps = res.equity / shares;
+        
+    xs.push(r.toFixed(2));
+        ys.push(ivps);
+      }
+      chart.data.labels = xs;
+      
+    chart.data.datasets[0].data = ys;
+      chart.update();
+    }
+
+    initChart();
+  
+    </script>
+    
+    </body>
+</html>

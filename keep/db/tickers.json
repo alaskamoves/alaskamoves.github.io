@@ -1,0 +1,156 @@
+[
+  {
+    "ticker": "AAPL",
+    "companyName": "Apple Inc.",
+    "cik": "0000320193",
+    "latest": {
+      "10-K": {
+        "accession": "0000320193-24-000123",
+        "filingDate": "2024-11-01"
+      },
+      "10-Q": {
+        "accession": "0000320193-25-000073",
+        "filingDate": "2025-08-01"
+      }
+    },
+    "bundlePath": "tickers/AAPL/AAPL.json"
+  },
+  {
+    "ticker": "ALL",
+    "companyName": "ALLSTATE CORP",
+    "cik": "0000899051",
+    "latest": {
+      "10-K": {
+        "accession": "0000899051-25-000015",
+        "filingDate": "2025-02-24"
+      },
+      "10-Q": {
+        "accession": "0000899051-25-000070",
+        "filingDate": "2025-07-30"
+      }
+    },
+    "bundlePath": "tickers/ALL/ALL.json"
+  },
+  {
+    "ticker": "F",
+    "companyName": "FORD MOTOR CO",
+    "cik": "0000037996",
+    "latest": {
+      "10-K": {
+        "accession": "0000037996-25-000013",
+        "filingDate": "2025-02-06"
+      },
+      "10-Q": {
+        "accession": "0000037996-25-000147",
+        "filingDate": "2025-07-31"
+      }
+    },
+    "bundlePath": "tickers/F/F.json"
+  },
+  {
+    "ticker": "HD",
+    "companyName": "HOME DEPOT, INC.",
+    "cik": "0000354950",
+    "latest": {
+      "10-K": {
+        "accession": "0000354950-25-000085",
+        "filingDate": "2025-03-21"
+      },
+      "10-Q": {
+        "accession": "0000354950-25-000165",
+        "filingDate": "2025-05-28"
+      }
+    },
+    "bundlePath": "tickers/HD/HD.json"
+  },
+  {
+    "ticker": "JPM",
+    "companyName": "JPMORGAN CHASE & CO",
+    "cik": "0000019617",
+    "latest": {
+      "10-K": {
+        "accession": "0000019617-25-000270",
+        "filingDate": "2025-02-14"
+      },
+      "10-Q": {
+        "accession": "0000019617-25-000615",
+        "filingDate": "2025-08-05"
+      }
+    },
+    "bundlePath": "tickers/JPM/JPM.json"
+  },
+  {
+    "ticker": "RIVN",
+    "companyName": "Rivian Automotive, Inc. / DE",
+    "cik": "0001874178",
+    "latest": {
+      "10-K": {
+        "accession": "0001874178-25-000007",
+        "filingDate": "2025-02-24"
+      },
+      "10-Q": {
+        "accession": "0001874178-25-000036",
+        "filingDate": "2025-08-05"
+      }
+    },
+    "bundlePath": "tickers/RIVN/RIVN.json"
+  },
+  {
+    "ticker": "RYDAF",
+    "companyName": "Shell plc",
+    "cik": "0001306965",
+    "latest": {
+      "10-K": null,
+      "10-Q": null
+    },
+    "bundlePath": "tickers/RYDAF/RYDAF.json"
+  },
+  {
+    "ticker": "T",
+    "companyName": "AT&T INC.",
+    "cik": "0000732717",
+    "latest": {
+      "10-K": {
+        "accession": "0000732717-25-000013",
+        "filingDate": "2025-02-12"
+      },
+      "10-Q": {
+        "accession": "0000732717-25-000080",
+        "filingDate": "2025-07-24"
+      }
+    },
+    "bundlePath": "tickers/T/T.json"
+  },
+  {
+    "ticker": "UPS",
+    "companyName": "UNITED PARCEL SERVICE INC",
+    "cik": "0001090727",
+    "latest": {
+      "10-K": {
+        "accession": "0001090727-25-000019",
+        "filingDate": "2025-02-18"
+      },
+      "10-Q": {
+        "accession": "0001090727-25-000064",
+        "filingDate": "2025-08-06"
+      }
+    },
+    "bundlePath": "tickers/UPS/UPS.json"
+  },
+  {
+    "ticker": "WMT",
+    "companyName": "Walmart Inc.",
+    "cik": "0000104169",
+    "latest": {
+      "10-K": {
+        "accession": "0000104169-25-000021",
+        "filingDate": "2025-03-14"
+      },
+      "10-Q": {
+        "accession": "0000104169-25-000090",
+        "filingDate": "2025-06-06"
+      }
+    },
+    "bundlePath": "tickers/WMT/WMT.json"
+  }
+]

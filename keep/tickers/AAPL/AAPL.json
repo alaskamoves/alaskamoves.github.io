@@ -1,0 +1,24 @@
+{
+  "ticker": "AAPL",
+  "cik": "0000320193",
+  "companyName": "Apple Inc.",
+  "latest": {
+    "10-K": {
+      "accession": "0000320193-24-000123",
+      "filingDate": "2024-11-01"
+    },
+    "10-Q": {
+      "accession": "0000320193-25-000073",
+      "filingDate": "2025-08-01"
+    }
+  },
+  "derived": {
+    "fcf0": 108807000000.0,
+    "net_debt": 55807000000.0,
+    "shares": 15116786000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000320193.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json"
+  }
+}

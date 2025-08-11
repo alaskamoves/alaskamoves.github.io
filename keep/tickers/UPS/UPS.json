@@ -1,0 +1,24 @@
+{
+  "ticker": "UPS",
+  "cik": "0001090727",
+  "companyName": "UNITED PARCEL SERVICE INC",
+  "latest": {
+    "10-K": {
+      "accession": "0001090727-25-000019",
+      "filingDate": "2025-02-18"
+    },
+    "10-Q": {
+      "accession": "0001090727-25-000064",
+      "filingDate": "2025-08-06"
+    }
+  },
+  "derived": {
+    "fcf0": 6213000000.0,
+    "net_debt": 13047000000.0,
+    "shares": 848000000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001090727.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001090727.json"
+  }
+}

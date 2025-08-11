@@ -1,0 +1,18 @@
+{
+  "ticker": "RYDAF",
+  "cik": "0001306965",
+  "companyName": "Shell plc",
+  "latest": {
+    "10-K": null,
+    "10-Q": null
+  },
+  "derived": {
+    "fcf0": 36000000000.0,
+    "net_debt": -40910000000.0,
+    "shares": 5910000000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001306965.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001306965.json"
+  }
+}

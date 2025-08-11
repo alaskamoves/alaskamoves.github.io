@@ -1,0 +1,24 @@
+{
+  "ticker": "T",
+  "cik": "0000732717",
+  "companyName": "AT&T INC.",
+  "latest": {
+    "10-K": {
+      "accession": "0000732717-25-000013",
+      "filingDate": "2025-02-12"
+    },
+    "10-Q": {
+      "accession": "0000732717-25-000080",
+      "filingDate": "2025-07-24"
+    }
+  },
+  "derived": {
+    "fcf0": 21310000000.0,
+    "net_debt": 63091000000.0,
+    "shares": 7200000000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000732717.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000732717.json"
+  }
+}

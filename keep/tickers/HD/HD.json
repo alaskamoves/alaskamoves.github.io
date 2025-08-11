@@ -1,0 +1,24 @@
+{
+  "ticker": "HD",
+  "cik": "0000354950",
+  "companyName": "HOME DEPOT, INC.",
+  "latest": {
+    "10-K": {
+      "accession": "0000354950-25-000085",
+      "filingDate": "2025-03-21"
+    },
+    "10-Q": {
+      "accession": "0000354950-25-000165",
+      "filingDate": "2025-05-28"
+    }
+  },
+  "derived": {
+    "fcf0": 16325000000.0,
+    "net_debt": 8392000000.0,
+    "shares": 994000000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000354950.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000354950.json"
+  }
+}

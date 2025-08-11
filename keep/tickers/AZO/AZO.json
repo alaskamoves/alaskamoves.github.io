@@ -1,0 +1,24 @@
+{
+  "ticker": "AZO",
+  "cik": "0000866787",
+  "companyName": "AUTOZONE INC",
+  "latest": {
+    "10-K": {
+      "accession": "0001558370-24-013758",
+      "filingDate": "2024-10-28"
+    },
+    "10-Q": {
+      "accession": "0001558370-25-008618",
+      "filingDate": "2025-06-13"
+    }
+  },
+  "derived": {
+    "fcf0": 1931420000.0,
+    "net_debt": 8907119000.0,
+    "shares": 25742000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000866787.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000866787.json"
+  }
+}

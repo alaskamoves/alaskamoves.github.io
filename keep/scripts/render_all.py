@@ -22,7 +22,7 @@ from typing import List
 import dcf_metrics           # batch_precompute, etc.
 import render_dcf_html       # render_html(), stooq_prior_close()
 
-CSS = "https://alaskamoves.us/styles/css/main.css"
+CSS = "https://alaskamoves.us/styles/css/dcf.css"
 
 
 def load_ticker_list(list_arg: str | None) -> List[str]:

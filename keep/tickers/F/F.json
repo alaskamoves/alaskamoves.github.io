@@ -15,7 +15,7 @@
   "derived": {
     "fcf0": 6739000000.0,
     "net_debt": -22644000000.0,
-    "shares": 3960000000.0
+    "shares": 4000000000.0
   },
   "sources": {
     "submissions": "https://data.sec.gov/submissions/CIK0000037996.json",

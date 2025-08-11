@@ -1,0 +1,24 @@
+{
+  "ticker": "MCD",
+  "cik": "0000063908",
+  "companyName": "MCDONALDS CORP",
+  "latest": {
+    "10-K": {
+      "accession": "0000063908-25-000012",
+      "filingDate": "2025-02-25"
+    },
+    "10-Q": {
+      "accession": "0000063908-25-000039",
+      "filingDate": "2025-08-06"
+    }
+  },
+  "derived": {
+    "fcf0": 6672000000.0,
+    "net_debt": 37339000000.0,
+    "shares": 714000000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000063908.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json"
+  }
+}

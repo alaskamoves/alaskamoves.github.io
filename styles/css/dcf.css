@@ -1,0 +1,139 @@
+/* DCF base styles */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg: #111;
+  --fg: #eee;
+  --muted: #9aa0a6;
+  --panel: #1a1a1a;
+  --panel-2: #0f0f0f;
+  --border: #2a2a2a;
+  --accent: #666; /* grey-ish */
+}
+
+/* ---- Global Reset & Base ---- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.45;
+}
+
+/* ---- Layout ---- */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* mimic utility classes used in HTML */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.gap-4 { gap: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+
+.grid { display: grid; }
+.grid-cols-1 { grid-template-columns: 1fr; }
+
+/* media utilities */
+@media (min-width: 768px) {
+  .md\:flex-row { flex-direction: row; }
+  .md\:items-end { align-items: flex-end; }
+  .md\:justify-between { justify-content: space-between; }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:col-span-2 { grid-column: span 2 / span 2; }
+}
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lg\:col-span-2 { grid-column: span 2 / span 2; }
+}
+
+/* spacing */
+.p-3 { padding: 0.75rem; }
+.p-5 { padding: 1.25rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+
+/* simple colors */
+.bg-zinc-50 { background: #181818; }
+.bg-zinc-200 { background: #202020; }
+.h-px { height: 1px; }
+
+/* ---- Card / Panels ---- */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 10px 30px rgba(0,0,0,0.35);
+}
+.rounded-xl { border-radius: 12px; }
+
+/* ---- Typography ---- */
+h1 { font-size: 1.9rem; margin: 0 0 0.75rem; font-weight: 600; }
+h2 { font-size: 1.25rem; margin: 0; }
+.text-xl { font-size: 1.25rem; }
+.font-semibold { font-weight: 600; }
+.muted, .hint { color: var(--muted); font-size: 0.9rem; }
+.kpi { font-size: 1.6rem; font-weight: 600; }
+
+/* ---- Forms ---- */
+.label { font-size: 0.9rem; color: var(--muted); display: block; margin-bottom: 0.35rem; }
+.input, .number-input { 
+  width: 100%;
+  background: var(--panel-2);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+}
+.input:focus, .number-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.25);
+}
+.w-full { width: 100%; }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent); color: #fff;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px; padding: 0.55rem 0.9rem; cursor: pointer;
+}
+.btn:hover { filter: brightness(1.05); }
+.btn:active { filter: brightness(0.95); }
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 0.55rem 0.9rem; cursor: pointer;
+}
+.btn-ghost:hover { background: #191919; }
+
+/* ---- Footer ---- */
+.site-footer { 
+  margin-top: 2rem; padding: 1rem 0; text-align: center; color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+.footer-nav a { color: var(--muted); text-decoration: none; margin: 0 0.5rem; }
+.footer-nav a:hover { color: #c3c7cd; }
+
+/* ---- Chart canvas tweaks ---- */
+canvas { display: block; max-width: 100%; }
+
+/* ---- Table generic (for index page) ---- */
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--border); text-align: left; }
+.table th { color: var(--muted); font-weight: 600; }
+
+/* ---- Links ---- */
+a { color: #666666; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* remove invalid CSS from prior version */
+/* (rel/target-name are HTML attributes, not CSS) */

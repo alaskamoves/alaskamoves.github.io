@@ -1,0 +1,24 @@
+{
+  "ticker": "PLTR",
+  "cik": "0001321655",
+  "companyName": "Palantir Technologies Inc.",
+  "latest": {
+    "10-K": {
+      "accession": "0001321655-25-000022",
+      "filingDate": "2025-02-18"
+    },
+    "10-Q": {
+      "accession": "0001321655-25-000106",
+      "filingDate": "2025-08-05"
+    }
+  },
+  "derived": {
+    "fcf0": 1141231000.0,
+    "net_debt": -2098524000.0,
+    "shares": 2338795000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001321655.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001321655.json"
+  }
+}

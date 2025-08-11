@@ -1,0 +1,24 @@
+{
+  "ticker": "HOOD",
+  "cik": "0001783879",
+  "companyName": "Robinhood Markets, Inc.",
+  "latest": {
+    "10-K": {
+      "accession": "0001783879-25-000049",
+      "filingDate": "2025-02-18"
+    },
+    "10-Q": {
+      "accession": "0001783879-25-000251",
+      "filingDate": "2025-07-31"
+    }
+  },
+  "derived": {
+    "fcf0": -185000000.0,
+    "net_debt": -4332000000.0,
+    "shares": 888000000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001783879.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001783879.json"
+  }
+}

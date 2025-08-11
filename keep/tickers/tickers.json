@@ -13,7 +13,7 @@
         "filingDate": "2025-08-01"
       }
     },
-    "bundlePath": "tickers/AAPL/AAPL.json"
+    "bundlePath": "../tickers/AAPL/AAPL.json"
   },
   {
     "ticker": "ALL",
@@ -29,7 +29,23 @@
         "filingDate": "2025-07-30"
       }
     },
-    "bundlePath": "tickers/ALL/ALL.json"
+    "bundlePath": "../tickers/ALL/ALL.json"
+  },
+  {
+    "ticker": "AZO",
+    "companyName": "AUTOZONE INC",
+    "cik": "0000866787",
+    "latest": {
+      "10-K": {
+        "accession": "0001558370-24-013758",
+        "filingDate": "2024-10-28"
+      },
+      "10-Q": {
+        "accession": "0001558370-25-008618",
+        "filingDate": "2025-06-13"
+      }
+    },
+    "bundlePath": "../tickers/AZO/AZO.json"
   },
   {
     "ticker": "F",
@@ -45,7 +61,7 @@
         "filingDate": "2025-07-31"
       }
     },
-    "bundlePath": "tickers/F/F.json"
+    "bundlePath": "../tickers/F/F.json"
   },
   {
     "ticker": "HD",
@@ -61,7 +77,23 @@
         "filingDate": "2025-05-28"
       }
     },
-    "bundlePath": "tickers/HD/HD.json"
+    "bundlePath": "../tickers/HD/HD.json"
+  },
+  {
+    "ticker": "HOOD",
+    "companyName": "Robinhood Markets, Inc.",
+    "cik": "0001783879",
+    "latest": {
+      "10-K": {
+        "accession": "0001783879-25-000049",
+        "filingDate": "2025-02-18"
+      },
+      "10-Q": {
+        "accession": "0001783879-25-000251",
+        "filingDate": "2025-07-31"
+      }
+    },
+    "bundlePath": "../tickers/HOOD/HOOD.json"
   },
   {
     "ticker": "JPM",
@@ -77,7 +109,39 @@
         "filingDate": "2025-08-05"
       }
     },
-    "bundlePath": "tickers/JPM/JPM.json"
+    "bundlePath": "../tickers/JPM/JPM.json"
+  },
+  {
+    "ticker": "MCD",
+    "companyName": "MCDONALDS CORP",
+    "cik": "0000063908",
+    "latest": {
+      "10-K": {
+        "accession": "0000063908-25-000012",
+        "filingDate": "2025-02-25"
+      },
+      "10-Q": {
+        "accession": "0000063908-25-000039",
+        "filingDate": "2025-08-06"
+      }
+    },
+    "bundlePath": "../tickers/MCD/MCD.json"
+  },
+  {
+    "ticker": "PLTR",
+    "companyName": "Palantir Technologies Inc.",
+    "cik": "0001321655",
+    "latest": {
+      "10-K": {
+        "accession": "0001321655-25-000022",
+        "filingDate": "2025-02-18"
+      },
+      "10-Q": {
+        "accession": "0001321655-25-000106",
+        "filingDate": "2025-08-05"
+      }
+    },
+    "bundlePath": "../tickers/PLTR/PLTR.json"
   },
   {
     "ticker": "RIVN",
@@ -93,17 +157,7 @@
         "filingDate": "2025-08-05"
       }
     },
-    "bundlePath": "tickers/RIVN/RIVN.json"
-  },
-  {
-    "ticker": "RYDAF",
-    "companyName": "Shell plc",
-    "cik": "0001306965",
-    "latest": {
-      "10-K": null,
-      "10-Q": null
-    },
-    "bundlePath": "tickers/RYDAF/RYDAF.json"
+    "bundlePath": "../tickers/RIVN/RIVN.json"
   },
   {
     "ticker": "T",
@@ -119,7 +173,7 @@
         "filingDate": "2025-07-24"
       }
     },
-    "bundlePath": "tickers/T/T.json"
+    "bundlePath": "../tickers/T/T.json"
   },
   {
     "ticker": "UPS",
@@ -135,7 +189,7 @@
         "filingDate": "2025-08-06"
       }
     },
-    "bundlePath": "tickers/UPS/UPS.json"
+    "bundlePath": "../tickers/UPS/UPS.json"
   },
   {
     "ticker": "WMT",
@@ -151,6 +205,22 @@
         "filingDate": "2025-06-06"
       }
     },
-    "bundlePath": "tickers/WMT/WMT.json"
+    "bundlePath": "../tickers/WMT/WMT.json"
+  },
+  {
+    "ticker": "XOM",
+    "companyName": "EXXON MOBIL CORP",
+    "cik": "0000034088",
+    "latest": {
+      "10-K": {
+        "accession": "0000034088-25-000010",
+        "filingDate": "2025-02-19"
+      },
+      "10-Q": {
+        "accession": "0000034088-25-000042",
+        "filingDate": "2025-08-04"
+      }
+    },
+    "bundlePath": "../tickers/XOM/XOM.json"
   }
 ]

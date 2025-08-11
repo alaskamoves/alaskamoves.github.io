@@ -1,0 +1,24 @@
+{
+  "ticker": "XOM",
+  "cik": "0000034088",
+  "companyName": "EXXON MOBIL CORP",
+  "latest": {
+    "10-K": {
+      "accession": "0000034088-25-000010",
+      "filingDate": "2025-02-19"
+    },
+    "10-Q": {
+      "accession": "0000034088-25-000042",
+      "filingDate": "2025-08-04"
+    }
+  },
+  "derived": {
+    "fcf0": 30716000000.0,
+    "net_debt": 5026000000.0,
+    "shares": 4353000000.0
+  },
+  "sources": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000034088.json",
+    "companyfacts": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000034088.json"
+  }
+}

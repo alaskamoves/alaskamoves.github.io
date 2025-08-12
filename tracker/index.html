@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tracking</title>
+    <!-- JetBrains Mono (for UI + optional label text) -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://alaskamoves.us/styles/css/moves.css" />
+</head>
+<body>
+    <div class="container">
+
+        <section>
+            <h2>Package Tracker</h2>
+            <input type="text" id="trackingNumber" placeholder="Enter tracking number" />
+            <button id="trackBtn">Track</button>
+            <div id="trackingResult"></div>
+        </section>
+
+    </div>
+
+    <footer class="site-footer">
+        <nav class="footer-nav">
+            <a  href="https://alaskamoves.us/index.html">
+            &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+            <br /></a>
+            <a href="https://alaskamoves.us/build/index.html">build</a>
+            <a href="https://alaskamoves.us/connect/index.html">connect</a>
+            <a href="https://alaskamoves.us/dispatch/index.html">dispatch</a>
+            <a href="https://alaskamoves.us/exchange/index.html">exchange</a>
+            <a href="https://alaskamoves.us/file/index.html">file</a>
+        </nav>
+    </footer>
+    <script>
+        document.getElementById('trackBtn').addEventListener('click', function() {
+            var trackingNumber = document.getElementById('trackingNumber').value.trim();
+            var resultDiv = document.getElementById('trackingResult');
+            if(trackingNumber) {
+                resultDiv.textContent = 'Tracking status for ' + trackingNumber + ': In Transit';
+            } else {
+                resultDiv.textContent = 'Please enter a tracking number.';
+            }
+        });
+    </script>
+    </body>
+</html>

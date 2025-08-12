@@ -1,0 +1,155 @@
+/* moves.css — standalone stylesheet for moves/index.html
+   - Provides its own base theme (greyscale, monospace stack)
+   - Responsive: stacked on mobile, 1:1 split on desktop
+   - Accurate 4×6 label preview + print rules
+*/
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ---- Base Theme ---- */
+:root {
+  --bg: #111;
+  --fg: #eaeaea;
+  --muted: #9a9a9a;
+  --card-bg: #101010;
+  --card-border: #1f1f1f;
+  --line: #ddd;
+  --paper: #fff;
+  --ink: #111;
+}
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  padding: 24px;
+  color: var(--fg);
+  background: var(--bg);
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 899px) {
+  body { padding: 12px; }
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---- Layout: mobile-first stack, desktop 1:1 ---- */
+.app {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: stretch;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .app {
+    grid-template-columns: 1fr 1fr; /* 1:1 split */
+    gap: 18px;
+  }
+}
+
+/* Column cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+}
+.card h2 { margin: 0 0 8px 0; font-size: 14px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+
+/* Form controls */
+label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 6px; }
+input, textarea, select, button {
+  font: inherit;
+}
+input, textarea, select {
+  width: 100%; background: #0e0e0e; color: var(--fg);
+  border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 12px; outline: none;
+  min-width: 0;
+}
+textarea { min-height: 74px; resize: vertical; }
+.row { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+.row > * { min-width: 0; }
+@media (max-width: 900px) {
+  .row { grid-template-columns: 1fr; }
+}
+.btnbar { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+button { appearance: none; border: 1px solid #2a2a2a; background: #0b0b0b; color: var(--fg); padding: 10px 14px; border-radius: 12px; cursor: pointer; }
+button.primary { background: var(--fg); color: #111; border-color: var(--fg); }
+button:active { transform: translateY(1px); }
+
+/* Right column: center the preview */
+.label-wrap { display: flex; align-items: center; justify-content: center; min-height: 100%; overflow: hidden; }
+
+/* ---- Label (4×6 inches) ---- */
+.label-paper {
+  width: 4in; height: 6in; background: var(--paper); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 4px; padding: .12in; position: relative; margin: 0 auto;
+  max-width: 100%;
+  /* no extra bottom reserve needed; footer is in normal flow */
+}
+
+/* Label internals */
+.sec { border: 1px solid var(--line); border-radius: 2px; padding: .08in; }
+.grid { display: grid; gap: .06in; }
+.grid > .sec:last-child { margin-bottom: 0; }
+.grid-2 { grid-template-columns: 1fr 1fr; gap: .06in; }
+.hdr { font-weight: 600; font-size: .12in; letter-spacing: .02em; margin-bottom: .04in; }
+.kv { font-size: .11in; white-space: pre-wrap; }
+.micro { font-size: .09in; color: #444; }
+.big { font-size: .24in; font-weight: 600; letter-spacing: .04em; }
+.topbar { display: grid; grid-template-columns: 1fr auto; gap: .06in; align-items: center; margin-bottom: .06in; }
+.brand { font-weight: 600; letter-spacing: .06em; font-size: .14in; }
+.svc { text-align: right; }
+.barcode { width: 100%; height: .8in; }
+.qrcode { width: .9in; height: .9in; border: 1px solid var(--line); display: grid; place-items: center; flex: 0 0 .9in; max-width: 100%; }
+.qrcode canvas,
+.qrcode img {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+.flex { display: flex; gap: .06in; align-items: center; flex-wrap: wrap; min-width: 0; }
+.grow { flex: 1; }
+#trkText { overflow-wrap: anywhere; word-break: break-word; min-width: 0; }
+.label-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .08in;
+  margin-top: .08in;
+  padding-top: .04in;
+  border-top: 1px dotted var(--line);
+}
+
+/* ---- Mobile whitespace trim & on-screen scaling ---- */
+@media (max-width: 899px) {
+  .card { padding: 12px; border-radius: 12px; }
+  .label-wrap { padding: 6px; overflow: hidden; }
+  /* CSS inches ~ 96px/in; 4in ≈ 384px */
+  :root { --label-scale: min(1, calc((100vw - 32px) / 384), calc((100vh - 32px) / 576)); }
+  .label-paper { transform: scale(var(--label-scale)); transform-origin: top center; }
+}
+
+/* ---- Footer (local to this page) ---- */
+.site-footer { margin-top: 2rem; padding-top: 1rem; font-size: 0.85rem; color: #666; text-align: center; }
+.footer-nav a { color: #666; margin: 0 0.5rem; text-decoration: none; }
+.footer-nav a:hover { color: #aaa; }
+
+/* ---- Print: hide UI, center label ---- */
+@media print {
+  @page { size: 4in 6in; margin: 0; }
+  body { padding: 0; background: white; color: black; }
+  .app { grid-template-columns: 1fr !important; }
+  .app > .card:first-child, .btnbar, .note, .site-footer, .footer-nav { display: none !important; }
+  .label-wrap { display: block; }
+  .label-wrap { overflow: visible !important; }
+  .label-paper { margin: 0 auto; break-inside: avoid; box-shadow: none; }
+}

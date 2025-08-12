@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>moves · Shipping Label (4×6) Demo</title>
+
+  <!-- JetBrains Mono (for UI + optional label text) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles/css/moves.css" />
+
+  <!-- JsBarcode (Code128) and QRCode (no keys required) -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+</head>
+<body>
+    <div class="app">
+
+    <div class="card">
+        <h2>Shipping Details</h2>
+        <div class="row">
+        <div>
+        <label>From · Name</label>
+        <input id="from_name" value="Alaska Transportation & Trucking L.L.C." />
+        </div>
+        <div>
+        <label>From · Phone</label>
+        <input id="from_phone" value="(216) 555‑8888" />
+        </div>
+        </div>
+
+        <label>From · Address</label>
+        <textarea id="from_addr">11850 Edgewater Dr, Lakewood, OH 44107</textarea>
+
+        <div class="row">
+            <div>
+                <label>To · Name</label>
+                <input id="to_name" value="Receiving Dock" />
+            </div>
+            <div>
+                <label>To · Phone</label>
+                <input id="to_phone" value="(330) 555‑9999" />
+            </div>
+        </div>
+
+        <label>To · Address</label>
+        <textarea id="to_addr">1250 Commerce Park Blvd, Rome, OH 44085</textarea>
+
+        <div class="row">
+            <div>
+                <label>Package Weight (lb)</label>
+                <input id="weight" type="number" min="0" step="0.1" value="12.5" />
+            </div>
+            <div>
+                <label>Dimensions (L×W×H in)</label>
+                <input id="dims" value="14 × 10 × 8" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+            <label>Service Level</label>
+                <select id="service">
+                    <option value="GROUND" selected>GROUND</option>
+                    <option value="2DAY">2‑DAY</option>
+                    <option value="OVERNIGHT">OVERNIGHT</option>
+                </select>
+            </div>
+            <div>
+                <label>Tracking Number</label>
+                <input id="tracking" value="MOV-44107-44281-000123" />
+            </div>
+        </div>
+
+        <div class="btnbar">
+            <button class="primary" id="btn-generate">Generate Label</button>
+            <button id="btn-print">Print Label</button>
+            <button id="btn-random">Randomize Tracking</button>
+        </div>
+        <p class="note" style="color:#9a9a9a; font-size:12px; margin:10px 2px 0;">
+        This is a <b>client‑side demo</b>. No data leaves the browser.
+        For production, replace tracking and rate logic with your private backend.</p>
+    </div>
+
+    <div class="card label-wrap">
+        <h2>Label Preview · 4×6 in</h2>
+        <div class="label-paper" id="label">
+            <div class="topbar">
+            <div class="brand">ALASKA MOVES</div>
+            <div class="svc big" id="svc">GROUND</div>
+            </div>
+
+            <div class="grid">
+                <div class="sec">
+                    <div class="hdr">SHIP FROM</div>
+                    <div class="kv" id="fromBlock">—</div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="sec">
+                        <div class="hdr">SHIP TO</div>
+                        <div class="kv" id="toBlock">—</div>
+                    </div>
+                    <div class="sec">
+                        <div class="hdr">DETAILS</div>
+                        <div class="kv"><span id="w"></span> lb · <span id="d"></span> in³</div>
+                        <div class="micro" id="stamp">—</div>
+                    </div>
+                </div>
+
+                <div class="sec">
+                    <div class="hdr">TRACKING</div>
+                        <svg id="barcode" class="barcode"></svg>
+                        <div class="flex" style="margin-top:.04in; align-items:center;">
+                        <div class="grow big" id="trkText">—</div>
+                        <div id="qr" class="qrcode"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <footer class="site-footer">
+    <nav class="footer-nav">
+    <a  href="https://alaskamoves.us/index.html">
+    &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+    <br /></a>
+    <a href="https://alaskamoves.us/build/index.html">build</a>
+    <a href="https://alaskamoves.us/connect/index.html">connect</a>
+    <a href="https://alaskamoves.us/dispatch/index.html">dispatch</a>
+    <a href="https://alaskamoves.us/exchange/index.html">exchange</a>
+    <a href="https://alaskamoves.us/file/index.html">file</a>
+    </nav>
+    </footer>
+
+    <script>
+    const $ = (id) => document.getElementById(id);
+
+    function lines(text) {
+    return text.trim().split(/\n+/).map(s => s.trim()).filter(Boolean);
+    }
+
+    function formatBlock(name, phone, addr) {
+    const a = lines(addr);
+    return [name, ...a, phone].filter(Boolean).join("\n");
+    }
+
+    function generateTracking() {
+    // Simple deterministic-ish tracking seed
+    const now = new Date();
+    const stamp = now.toISOString().slice(0,10).replace(/-/g,"");
+    const zA = (lines($("from_addr").value).pop() || "44107").match(/\b\d{5}\b/);
+    const zB = (lines($("to_addr").value).pop() || "44106").match(/\b\d{5}\b/);
+    const rnd = Math.floor(Math.random()*1e6).toString().padStart(6,'0');
+    return `MOV-${zA?zA[0]:"00000"}-${zB?zB[0]:"00000"}-${stamp}-${rnd}`;
+    }
+
+    function updateLabel() {
+    const from = formatBlock($("from_name").value, $("from_phone").value, $("from_addr").value);
+    const to   = formatBlock($("to_name").value,   $("to_phone").value,   $("to_addr").value);
+    const svc  = $("service").value;
+    const trk  = $("tracking").value.trim() || generateTracking();
+    const w    = parseFloat($("weight").value || "0").toFixed(1);
+    const dims = $("dims").value.replace(/x/ig,"×");
+
+    $("fromBlock").textContent = from;
+    $("toBlock").textContent   = to;
+    $("svc").textContent       = svc;
+    $("w").textContent         = w;
+    $("d").textContent         = dims;
+    $("trkText").textContent   = trk;
+
+    // Timestamp + micro stamp
+    const now = new Date();
+    $("stamp").textContent = `Printed ${now.toLocaleString()} · Non‑transferable`;
+
+    // Barcode (Code128)
+    JsBarcode("#barcode", trk, {
+    format: "CODE128",
+    width: 2,
+    height: 70,
+    displayValue: false,
+    margin: 0
+    });
+
+    // QR (link or payload)
+    const qrEl = $("qr");
+    qrEl.innerHTML = "";
+    const qr = new QRCode(qrEl, {
+    text: `https://alaskamoves.us/track/${encodeURIComponent(trk)}`,
+    width: 160,
+    height: 160,
+    correctLevel: QRCode.CorrectLevel.M
+    });
+    }
+
+    $("btn-generate").addEventListener('click', updateLabel);
+    $("btn-print").addEventListener('click', () => window.print());
+    $("btn-random").addEventListener('click', () => {
+    $("tracking").value = generateTracking();
+    updateLabel();
+    });
+
+    // First paint
+    updateLabel();
+    </script>
+    </body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Options Pricing (No APIs)</title>
+  <link rel="stylesheet" href="../../styles/css/options.css" />
+</head>
+<body>
+  <header class="dcf-header">
+    <div class="wrap">
+      <h1>Options Pricing — offline, minimal inputs</h1>
+      <span class="badge">Black–Scholes + Greeks</span>
+    </div>
+  </header>
+
+  <main class="dcf-main">
+    <!-- Input card -->
+    <section class="card">
+      <h2>Inputs</h2>
+      <div class="body">
+        <form id="optform">
+          <div class="row">
+            <label>Option Type
+              <select id="otype">
+                <option value="call">Call</option>
+                <option value="put">Put</option>
+              </select>
+            </label>
+            <label>Days to Expiry (DTE)
+              <input id="dte" type="number" inputmode="decimal" min="0" step="1" placeholder="e.g. 30" value="30" />
+              <span class="help">Calendar days. T = DTE/365.</span>
+            </label>
+          </div>
+
+          <div class="row">
+            <label>Underlying Price S
+              <input id="spot" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 100.00" />
+            </label>
+            <label>Strike K
+              <input id="strike" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 105.00" />
+            </label>
+          </div>
+
+          <div class="row3">
+            <label>Volatility σ (%)
+              <input id="vol" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Leave blank to solve from price" />
+              <span class="help">Annualized. If empty and Price is set, implied σ is solved.</span>
+            </label>
+            <label>Risk-free r (%)
+              <input id="rate" type="number" inputmode="decimal" step="0.01" value="4.00" />
+              <span class="help">Annual continuously-compounded approx.</span>
+            </label>
+            <label>Dividend q (%)
+              <input id="divy" type="number" inputmode="decimal" step="0.01" value="0.00" />
+              <span class="help">Set to 0 if none.</span>
+            </label>
+          </div>
+
+          <div class="row">
+            <label>Market Option Price (optional)
+              <input id="mkt" type="number" inputmode="decimal" min="0" step="0.01" placeholder="If set, IV is computed" />
+            </label>
+            <label>Output Precision (decimals)
+              <input id="prec" type="number" inputmode="numeric" min="0" step="1" value="4" />
+            </label>
+          </div>
+
+          <div class="inline">
+            <button type="button" id="compute">Compute</button>
+            <span id="msg" class="muted"></span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Results card -->
+    <section class="card">
+      <h2>Results</h2>
+      <div class="body results" id="results">
+        <div id="errs" class="error"></div>
+        <div class="grid" id="topline"></div>
+        <hr class="sep" />
+        <div class="grid" id="greeks"></div>
+        <hr class="sep" />
+        <div class="grid" id="extras"></div>
+        <div class="footer">Pure client-side; no data leaves this page.</div>
+      </div>
+    </section>
+
+      <footer class="site-footer">
+    <nav class="footer-nav">
+        <a  href="https://alaskamoves.us/index.html">
+            &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+            <br /></a>
+        <a href="https://alaskamoves.us/build/index.html">build</a>
+        <a href="https://alaskamoves.us/connect/index.html">connect</a>
+        <a href="https://alaskamoves.us/dispatch/index.html">dispatch</a>
+        <a href="https://alaskamoves.us/exchange/index.html">exchange</a>
+        <a href="https://alaskamoves.us/file/index.html">file</a>
+    </nav>
+    </footer>
+  </main>
+
+  <script>
+    // ---------- Math helpers ----------
+    function clamp(x, a, b){ return Math.min(Math.max(x, a), b); }
+    function toNum(v){ const n = Number(v); return Number.isFinite(n) ? n : NaN; }
+
+    function erf(x){ // Abramowitz–Stegun 7.1.26
+      const a1=0.254829592, a2=-0.284496736, a3=1.421413741, a4=-1.453152027, a5=1.061405429, p=0.3275911;
+      const sign = x < 0 ? -1 : 1; x = Math.abs(x);
+      const t = 1/(1 + p*x);
+      const y = 1 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+      return sign*y;
+    }
+    const SQRT2 = Math.SQRT2; const SQRT2PI = Math.sqrt(2*Math.PI);
+    function normCdf(x){ return 0.5*(1 + erf(x/SQRT2)); }
+    function normPdf(x){ return Math.exp(-0.5*x*x)/SQRT2PI; }
+
+    // ---------- Black–Scholes with continuous dividend yield q ----------
+    function bsCore({S,K,r,q,sig,T,type}){
+      if (T <= 0 || sig <= 0 || S <= 0 || K <= 0) return null;
+      const sqrtT = Math.sqrt(T);
+      const d1 = (Math.log(S/K) + (r - q + 0.5*sig*sig)*T) / (sig*sqrtT);
+      const d2 = d1 - sig*sqrtT;
+      const discR = Math.exp(-r*T), discQ = Math.exp(-q*T);
+      const price = type==='call' ? (S*discQ*normCdf(d1) - K*discR*normCdf(d2))
+                                  : (K*discR*normCdf(-d2) - S*discQ*normCdf(-d1));
+      const delta = type==='call' ? discQ*normCdf(d1) : discQ*(normCdf(d1) - 1);
+      const gamma = discQ*normPdf(d1)/(S*sig*sqrtT);
+      const vega  = S*discQ*normPdf(d1)*sqrtT;           // per 1.00 vol (100 vol pts)
+      const vegaPct = vega/100;                           // per 1 vol point
+      const theta = (type==='call'
+        ? (-(S*discQ*normPdf(d1)*sig)/(2*sqrtT) - r*K*discR*normCdf(d2) + q*S*discQ*normCdf(d1))
+        : (-(S*discQ*normPdf(d1)*sig)/(2*sqrtT) + r*K*discR*normCdf(-d2) - q*S*discQ*normCdf(-d1))
+      );
+      const thetaPerDay = theta/365;                      // calendar day
+      const rho = (type==='call' ? K*T*discR*normCdf(d2) : -K*T*discR*normCdf(-d2));
+      const rhoPerBp = rho/10000;                         // per 1bp move in r
+      return { price, d1, d2, delta, gamma, vega, vegaPct, thetaPerDay, rhoPerBp, discR, discQ };
+    }
+
+    // Implied volatility via bisection
+    function impliedVol({S,K,r,q,T,type, target, tol=1e-7}){
+      let lo = 1e-6, hi = 5.0; // 0.0001% to 500% annual vol
+      let mid=0;
+      for (let i=0; i<100; i++){
+        mid = 0.5*(lo+hi);
+        const p = bsCore({S,K,r,q,sig:mid,T,type});
+        if(!p) return NaN;
+        const diff = p.price - target;
+        if (Math.abs(diff) < tol) return mid;
+        if (diff > 0) hi = mid; else lo = mid;
+      }
+      return mid; // fallback best-effort
+    }
+
+    // ---------- UI wiring ----------
+    const $ = (id) => document.getElementById(id);
+    const fields = ['otype','dte','spot','strike','vol','rate','divy','mkt','prec'];
+
+    function readInputs(){
+      const otype = $('otype').value;
+      const dte   = Number($('dte').value);
+      const S     = Number($('spot').value);
+      const K     = Number($('strike').value);
+      const volIn = $('vol').value.trim();
+      const sig   = volIn === '' ? NaN : Number(volIn)/100;
+      const r     = (Number($('rate').value)||0)/100;
+      const q     = (Number($('divy').value)||0)/100;
+      const mkt   = Number($('mkt').value);
+      const prec  = Math.max(0, Math.min(8, parseInt($('prec').value||4,10)));
+      return { type: otype, dte, T: dte/365, S, K, sig, r, q, mkt, prec };
+    }
+
+    function fmt(n, p=4){ if(!Number.isFinite(n)) return '—'; return n.toLocaleString(undefined, {minimumFractionDigits:p, maximumFractionDigits:p}); }
+    function fUsd(n, p=2){ if(!Number.isFinite(n)) return '—'; return n.toLocaleString(undefined,{style:'currency',currency:'USD', minimumFractionDigits:p, maximumFractionDigits:p}); }
+    function fPct(n, p=2){ if(!Number.isFinite(n)) return '—'; return (n*100).toLocaleString(undefined, {minimumFractionDigits:p, maximumFractionDigits:p}) + '%'; }
+
+    function compute(){
+      const {type, dte, T, S, K, sig, r, q, mkt, prec} = readInputs();
+      const errs = [];
+      if(!(S>0)) errs.push('Enter S (Underlying Price).');
+      if(!(K>0)) errs.push('Enter K (Strike).');
+      if(!(dte>=0)) errs.push('Enter non-negative DTE.');
+      if (T===0) errs.push('T is zero — pricing undefined. Use DTE ≥ 1.');
+      const errsBox = $('errs');
+      errsBox.textContent = errs.join(' ');
+      if (errs.length){ $('topline').innerHTML=''; $('greeks').innerHTML=''; $('extras').innerHTML=''; return; }
+
+      let sigma = sig;
+      let ivNote='';
+      if (!Number.isFinite(sigma)){
+        if (Number.isFinite(mkt) && mkt>0){
+          sigma = impliedVol({S,K,r,q,T,type, target:mkt});
+          ivNote = isFinite(sigma) ? `Solved IV from market price: ${fPct(sigma,2)}` : 'Unable to solve IV from price.';
+        } else {
+          errsBox.textContent = 'Provide either σ or a Market Price to solve IV.';
+          $('topline').innerHTML=''; $('greeks').innerHTML=''; $('extras').innerHTML='';
+          return;
+        }
+      }
+
+      const out = bsCore({S,K,r,q,sig:sigma,T,type});
+      if(!out){ errsBox.textContent = 'Computation failed. Check inputs.'; return; }
+
+      const intrinsic = Math.max(type==='call' ? (S-K) : (K-S), 0);
+      const priceModel = out.price;
+      const premium = Number.isFinite(mkt) && mkt>0 ? mkt : priceModel;
+      const timeValue = Math.max(premium - intrinsic, 0);
+      const breakeven = type==='call' ? (K + premium) : (K - premium);
+      const probITM_RN = type==='call' ? normCdf(out.d2) : normCdf(-out.d2);
+      const expectedMove = S * sigma * Math.sqrt(T);
+
+      $('topline').innerHTML = `
+        <div class="stat"><div class="k">Model Price</div><div class="v">${fUsd(priceModel,2)}</div></div>
+        <div class="stat"><div class="k">Premium Used</div><div class="v">${fUsd(premium,2)}</div></div>
+        <div class="stat"><div class="k">Implied Vol</div><div class="v">${fPct(sigma,2)}</div></div>
+      `;
+
+      $('greeks').innerHTML = `
+        <div class="stat"><div class="k">Delta</div><div class="v">${fmt(out.delta, prec)}</div></div>
+        <div class="stat"><div class="k">Gamma</div><div class="v">${fmt(out.gamma, prec)}</div></div>
+        <div class="stat"><div class="k">Vega / 1 vol pt</div><div class="v">${fmt(out.vegaPct, prec)}</div></div>
+        <div class="stat"><div class="k">Theta / day</div><div class="v">${fmt(out.thetaPerDay, prec)}</div></div>
+        <div class="stat"><div class="k">Rho / bp</div><div class="v">${fmt(out.rhoPerBp, prec)}</div></div>
+        <div class="stat"><div class="k">d₁ / d₂</div><div class="v">${fmt(out.d1, prec)} / ${fmt(out.d2, prec)}</div></div>
+      `;
+
+      $('extras').innerHTML = `
+        <div class="stat"><div class="k">Intrinsic</div><div class="v">${fUsd(intrinsic,2)}</div></div>
+        <div class="stat"><div class="k">Time Value</div><div class="v">${fUsd(timeValue,2)}</div></div>
+        <div class="stat"><div class="k">Breakeven @ Expiry</div><div class="v">${fUsd(breakeven,2)}</div></div>
+        <div class="stat"><div class="k">Risk-Neutral P(ITM)</div><div class="v">${fPct(probITM_RN,2)}</div></div>
+        <div class="stat"><div class="k">Expected Move</div><div class="v">${fUsd(expectedMove,2)}</div></div>
+      `;
+
+      $('errs').textContent = ivNote;
+    }
+
+    document.getElementById('compute').addEventListener('click', compute);
+    let t=null; fields.forEach(id => document.getElementById(id).addEventListener('input', ()=>{ clearTimeout(t); t=setTimeout(compute, 180); }));
+    window.addEventListener('DOMContentLoaded', compute);
+  </script>
+</body>
+</html>

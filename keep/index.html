@@ -12,35 +12,17 @@
 
     <h1>In-House Bookkeeping Interface</h1>
 
-    <p> The <code>keep/</code> directory now serves as the centralized bookkeeping interface,
-        linking expense and mileage trackers through the date spine <code>yyyymmdd</code>
-        to ensure on-premise LLC compliance.</p>
+    <p> TODO: The <code>keep/</code> directory now serves as the centralised bookkeeping interface,
+        linking miles, interactions, and transactions with the date as primary key, '<code>YYYYMMDD</code>',
+        to ensure on-premise data integrity.</p>
 
-    <p> This section interacts directly with the underlying SQLite database (<code>ledger.db</code>),
-        supports manual editing via DataGrip,
+    <p> This section interacts directly with the underlying SQLite database,
+        supports manual editing via one's IDE of choice,
         and can be integrated with automation scripts for streamlined data ingestion and management using canonical field names.</p>
-
-    <p>
-        The schema uses canonical, lower_snake_case field names for each table:
-    </p>
-    <ul>
-        <li>
-            Transactions (table: <code>txns</code>): <code>yyyymmdd</code>, <code>house</code>, <code>type</code>, <code>amount</code>, <code>memo</code>
-        </li>
-        <li>
-            Mileage (table: <code>miles</code>): <code>yyyymmdd</code>, <code>business_miles</code>, <code>note</code>, optional <code>odometer_start</code>, <code>odometer_end</code>
-        </li>
-        <li>
-            Posts (tables: <code>posts</code>, <code>post_mirrors</code>): <code>post_id</code>, <code>yyyymmdd</code>, <code>title</code>, <code>canonical_url</code>; and mirrors: <code>platform</code>, <code>url</code>
-        </li>
-    </ul>
-
-    <p>
-        The schema enforces data integrity with explicit constraints: <code>yyyymmdd</code> is 8 digits; <code>amount</code> and <code>business_miles</code> are numeric; <code>post_id</code> and <code>house</code> are non-empty; and foreign keys link <code>post_mirrors.post_id</code> to <code>posts.post_id</code>.
-    </p>
 
     <div class="links">
         <a href="tickers/index.html" target="_self" rel="noopener noreferrer">DCF REPORTS.</a>
+        <a href="options/index.html" target="_self" rel="noopener noreferrer">PRICING OPTIONS.</a>
     </div>
 
 

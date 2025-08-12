@@ -1,0 +1,129 @@
+/* options.css — grayscale + JetBrains Mono (footer + overlap fixes) */
+
+/* Universal box sizing prevents overflow math issues */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root{
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Neutral grayscale palette */
+  --bg-00:#0a0a0a;   /* page */
+  --bg-01:#111111;   /* cards */
+  --bg-02:#161616;   /* inputs / inner */
+  --line-00:#242424; /* borders */
+
+  --ink-00:#f2f2f2;  /* primary text */
+  --ink-01:#c9c9c9;  /* secondary */
+  --ink-02:#9a9a9a;  /* muted */
+  --ink-03:#7a7a7a;  /* subtle */
+
+  --accent-00:#d9d9d9; /* focus ring */
+  --accent-01:#e6e6e6; /* button text */
+
+  --radius:10px;
+  --gap:12px;
+  --shadow:0 8px 22px rgba(0,0,0,.35);
+  --maxw:980px;
+  --pad:14px;
+}
+
+html, body{
+  background:var(--bg-00);
+  color:var(--ink-00);
+  font-family:var(--font-mono);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.4;
+  height:100%;
+}
+
+/* Sticky header already set in markup */
+.dcf-header{ position:sticky; top:0; z-index:10; backdrop-filter:blur(6px); background:rgba(10,10,10,.7); border-bottom:1px solid var(--line-00); }
+.dcf-header .wrap{ max-width:var(--maxw); margin:0 auto; padding:12px 16px; display:flex; gap:12px; align-items:baseline; }
+.dcf-header h1{ font-size:16px; margin:0; letter-spacing:.2px; font-weight:600; color:var(--ink-01); }
+.badge{ border:1px solid var(--line-00); border-radius:999px; padding:2px 8px; font-size:11px; color:var(--ink-02); }
+
+/* Layout should push footer down and avoid overlap */
+body{ display:flex; flex-direction:column; }
+.dcf-main{ flex:1 0 auto; max-width:var(--maxw); margin:22px auto 60px; padding:0 16px 40px; display:grid; grid-template-columns:1fr; gap:var(--gap); }
+@media (min-width:960px){ .dcf-main{ grid-template-columns:420px 1fr; align-items:start; } }
+
+/* Cards */
+.card{ background:var(--bg-01); border:1px solid var(--line-00); border-radius:var(--radius); box-shadow:var(--shadow); }
+.card>h2{ margin:0; padding:var(--pad) 16px; border-bottom:1px solid var(--line-00); font-size:14px; color:var(--ink-01); letter-spacing:.2px; }
+.card .body{ padding:var(--pad) 16px; }
+.footer{ margin-top:10px; font-size:11px; color:var(--ink-03); }
+.sep{ height:1px; background:var(--line-00); margin:10px 0; border:0; }
+
+/* Forms — responsive grids that never overlap */
+form{ display:grid; gap:10px; }
+
+/* auto-fit allows wrapping to new rows as space shrinks */
+.row{  display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); }
+.row3{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); }
+
+label{ display:grid; gap:6px; font-size:12px; color:var(--ink-02); min-width:0; }
+label>.help{ display:block; }
+
+input[type="number"], select{
+  width:100%; min-width:0; /* critical to allow shrinking within grid cells */
+  padding:10px 12px;
+  border-radius:8px; border:1px solid var(--line-00);
+  background:var(--bg-02); color:var(--ink-00); outline:none;
+  font-family:var(--font-mono); line-height:1.2;
+}
+input[type="number"]::placeholder{ color:var(--ink-03); }
+select{ appearance:none; background-image:none; }
+
+input[type="number"]:focus, select:focus, button:focus{
+  border-color:var(--accent-00);
+  box-shadow:0 0 0 3px rgba(255,255,255,.08);
+}
+
+.help{ font-size:11px; color:var(--ink-03); }
+.muted{ color:var(--ink-02); font-size:12px; }
+.inline{ display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; }
+
+/* Buttons */
+button{
+  appearance:none; border:1px solid var(--line-00); background:linear-gradient(180deg, #1a1a1a, #141414);
+  color:var(--accent-01); padding:10px 14px; border-radius:8px; font-family:var(--font-mono);
+  font-size:12px; cursor:pointer;
+}
+button:hover{ filter:brightness(1.05); }
+button:active{ transform:translateY(1px); }
+
+/* Results grid with responsive wrapping */
+.results{ display:grid; gap:8px; }
+.results .grid{ display:grid; gap:8px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); }
+
+.stat{ background:var(--bg-02); border:1px solid var(--line-00); border-radius:8px; padding:12px; min-width:0; }
+.stat .k{ font-size:11px; color:var(--ink-03); }
+.stat .v{ font-size:16px; font-weight:600; letter-spacing:.2px; margin-top:4px; color:var(--ink-01); overflow-wrap:anywhere; }
+
+/* Messages */
+.error{ color:#f0a0a0; font-size:12px; }
+.ok{ color:#a6e3a1; }
+
+/* ---- Footer (match main.css behavior) ---- */
+.site-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+
+  /* keep grayscale tokenization */
+  color: var(--ink-02, #666);
+  border-top: 1px solid var(--line-00, #242424);
+  background: transparent;
+}
+
+/* Footer nav links */
+.footer-nav a {
+  color: var(--ink-02, #666);
+  margin: 0 0.5rem;
+  text-decoration: none;
+}
+.footer-nav a:hover {
+  color: var(--ink-01, #aaa);
+}

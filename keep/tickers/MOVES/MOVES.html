@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alaska Moves — 2068 Retirement Valuation</title>
+  <link rel="stylesheet" href="https://alaskamoves.us/styles/css/dcf.css" />
+  <script>
+    // Helpers
+    const $ = (id) => document.getElementById(id);
+    const fmtMoney0 = (x) => (isFinite(x)
+      ? (x < 0 ? '-' : '') + new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(Math.abs(x))
+      : '—');
+    const fmtMoney2 = (x) => (isFinite(x)
+      ? (x < 0 ? '-' : '') + new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(Math.abs(x))
+      : '—');
+    function parseNum(input) {
+      if (input === null || input === undefined) return NaN;
+      const v = parseFloat(String(input).replace(/[\,\s]/g, ''));
+      return isNaN(v) ? NaN : v;
+    }
+
+    // Growing annuity PV with first payment at end of Year 1 (CF1)
+    // PV = CF1 * (1 - ((1+g)/(1+r))^N) / (r - g)
+    function growingAnnuityPV({ CF1, rPct, gPct, years, upfrontDebt = 0 }) {
+      const r = rPct / 100;
+      const g = gPct / 100;
+      if (r <= g) throw new Error('Discount rate must exceed growth.');
+      if (years <= 0) return 0;
+      const pv = CF1 * (1 - Math.pow((1 + g) / (1 + r), years)) / (r - g);
+      // If you want to net an upfront debt today, subtract it now.
+      return pv - Math.max(0, upfrontDebt);
+    }
+
+    function yearsRemaining(toYear) {
+      const thisYear = new Date().getFullYear();
+      return Math.max(0, toYear - thisYear);
+    }
+
+    function compute() {
+      try {
+        // Inputs
+        const CF1 = parseNum($("cf1").value);                 // $72,000
+        const gPct = parseNum($("g").value);                  // 4%
+        const rPct = parseNum($("r").value);                  // 10%
+        const retireYear = Math.round(parseNum($("retire").value)); // 2068
+        const shares = Math.max(1, Math.round(parseNum($("shares").value))); // 68
+        const investorPct = Math.min(100, Math.max(0, parseNum($("investorPct").value))); // 49%
+        const upfrontDebt = Math.max(0, parseNum($("debt").value));
+
+        // Horizon
+        const N = yearsRemaining(retireYear);
+        $("yearsLeft").textContent = N.toString();
+        const ylTop = document.getElementById("yearsLeft_top");
+        if (ylTop) ylTop.textContent = N.toString();
+
+        // PV of total stream (founder, 100% equity) in nominal terms
+        const PV_total = growingAnnuityPV({ CF1, rPct, gPct, years: N, upfrontDebt });
+
+        // Investor slice & per-share
+        const investorFraction = investorPct / 100; // 0.49
+        const PV_investor = PV_total * investorFraction;
+        const PV_per_share = PV_investor / shares;
+
+        // Render
+        $("pvTotal").textContent = fmtMoney0(PV_total);
+        $("pvInvestor").textContent = fmtMoney0(PV_investor);
+        $("pvShare").textContent = fmtMoney2(PV_per_share);
+      } catch (e) {
+        alert(e.message || String(e));
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Prefill dynamic years remaining
+      $("yearsLeft").textContent = yearsRemaining(parseInt($("retire").value, 10)).toString();
+      $("calcBtn").addEventListener('click', compute);
+      // Compute once on load
+      compute();
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Founder Tokens — 2068 Retirement Valuation</h1>
+        <p class="text-zinc-600 dark:text-zinc-300 mt-1">Nominal model: CF grows at 4% (inflation/track), discounted at 10% until you retire in <span class="font-semibold">2068</span>. Selling <span class="font-semibold">68</span> shares that represent <span class="font-semibold">49%</span> of equity.</p>
+      </div>
+    </header>
+
+    <section class="card p-5 flex flex-col gap-4 lg:col-span-3" id="results">
+      <h2 class="text-xl font-semibold mb-2">Results</h2>
+      <div class="text-sm text-zinc-700 dark:text-zinc-200 mb-2">DOT/IRS rounded, real-world numbers (not cooked)</div>
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-2 mb-4">
+        <div class="p-2 rounded bg-zinc-50 dark:bg-zinc-800"><div class="hint">CF₁</div><div>$72,000</div></div>
+        <div class="p-2 rounded bg-zinc-50 dark:bg-zinc-800"><div class="hint">g</div><div>4%</div></div>
+        <div class="p-2 rounded bg-zinc-50 dark:bg-zinc-800"><div class="hint">r</div><div>10%</div></div>
+        <div class="p-2 rounded bg-zinc-50 dark:bg-zinc-800"><div class="hint">Years left</div><div id="yearsLeft_top">—</div></div>
+        <div class="p-2 rounded bg-zinc-50 dark:bg-zinc-800"><div class="hint">Investor equity</div><div>49%</div></div>
+        <div class="p-2 rounded bg-zinc-50 dark:bg-zinc-800"><div class="hint">Shares</div><div>68</div></div>
+      </div>
+      <div class="grid grid-cols-1 gap-4">
+        <div class="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800">
+          <div class="hint">PV of Total Stream (100% equity)</div>
+          <div id="pvTotal" class="kpi">—</div>
+        </div>
+        <div class="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800">
+          <div class="hint">PV of Investor Slice (49%)</div>
+          <div id="pvInvestor" class="kpi">—</div>
+        </div>
+        <div class="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800">
+          <div class="hint">Market Price — 1 Share (49% / 68)</div>
+          <div id="pvShare" class="kpi">—</div>
+        </div>
+      </div>
+      <div class="mt-2 text-xs text-zinc-600 dark:text-zinc-300">
+        <strong>Policy:</strong> Dividends are paused until founder’s personal arrears and <span class="whitespace-nowrap">$100,000</span> debt are cleared. Tokenholders’ claim accrues per the model; in the interim, operational perks may be offered (e.g., <em>oil changes at cost</em>) as community benefit.
+      </div>
+    </section>
+
+    <section class="card p-5 lg:col-span-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="label">Year‑1 Cash Flow (CF₁)</label>
+          <input id="cf1" class="number-input" inputmode="decimal" value="72000" />
+          <p class="hint mt-1">First payout at end of Year 1.</p>
+        </div>
+        <div>
+          <label class="label">Retirement Year</label>
+          <input id="retire" class="number-input" inputmode="numeric" value="2068" />
+          <p class="hint mt-1">Years remaining: <span id="yearsLeft">—</span></p>
+        </div>
+        <div>
+          <label class="label">Discount Rate (r, %)</label>
+          <input id="r" class="number-input" inputmode="decimal" value="10" />
+        </div>
+        <div>
+          <label class="label">Cash Flow Growth (g, %)</label>
+          <input id="g" class="number-input" inputmode="decimal" value="4" />
+          <p class="hint mt-1">Tracks inflation / conservative fixed‑income growth.</p>
+        </div>
+        <div>
+          <label class="label">Investor Equity (%)</label>
+          <input id="investorPct" class="number-input" inputmode="decimal" value="49" />
+        </div>
+        <div>
+          <label class="label">Shares Sold (count)</label>
+          <input id="shares" class="number-input" inputmode="numeric" value="68" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="label">Upfront Debt to Net Out (USD)</label>
+          <input id="debt" class="number-input" inputmode="decimal" value="100000" />
+          <p class="hint mt-1">Set to 0 if debt service is already handled off‑stream.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex gap-2">
+        <button id="calcBtn" class="btn">Calculate</button>
+      </div>
+    </section>
+
+    <section class="card p-5 lg:col-span-3">
+      <h2 class="text-xl font-semibold mb-2">Zeno’s Paradox — Why 49.99% Across 68 Tokens</h2>
+      <p class="text-zinc-700 dark:text-zinc-200 mb-3">
+        The allocation is not an accident of math; it is a sentence served one clause at a time. I sell <span class="font-semibold">49.99%</span> of Alaska Moves as <span class="font-semibold">68 tokens</span> because control is not a commodity—it is a covenant. Each token is a step in a converging series: investors buy a fraction of what remains, and the remainder never crosses the aisle into majority. The limit exists; one never reaches it.
+      </p>
+      <p class="text-zinc-700 dark:text-zinc-200 mb-3">
+        On the books, the work is simple: <em>miles, posts, and transactions</em>. In governance, it is simpler still: the <span class="font-semibold">69th vote</span> remains on file with the founder—non‑transferable, encoded as a control right. This is not a theater prop for “founder control.” It is a safety valve against the temptation to optimize for quarterly signals at the expense of the road ahead.
+      </p>
+      <p class="text-zinc-700 dark:text-zinc-200 mb-3">
+        Zeno guards against the cliff‑edge. Instead of a one‑shot dilution, issuance proceeds as diminishing slices. Early buyers earn the longest duration of cash flow; later buyers still join the stream without pushing the ship off course. It keeps the enterprise sovereign and the math coherent: price is the discounted share of labor’s yield, not a rumor about tomorrow.
+      </p>
+      <ul class="list-disc pl-5 space-y-1 text-zinc-700 dark:text-zinc-200">
+        <li><span class="font-semibold">Supply:</span> 68 saleable tokens (aggregate 49.99%); the 69th is a governance key, not for sale.</li>
+        <li><span class="font-semibold">Issuance:</span> sequential, diminishing slices (the Zeno series) that never breach majority.</li>
+        <li><span class="font-semibold">Claim:</span> each token is a pro‑rata right to the discounted cash flow through retirement, calculated above.</li>
+        <li><span class="font-semibold">Discipline:</span> dividends commence only after personal arrears and <span class="whitespace-nowrap">$100,000</span> debt are cleared; until then, operations may return value in‑kind (e.g., oil changes at cost).</li>
+      </ul>
+      <details class="mt-3">
+        <summary class="cursor-pointer select-none font-medium">Control Guarantee (69th Vote)</summary>
+        <div class="mt-2 text-sm text-zinc-600 dark:text-zinc-300 space-y-1">
+          <p>The <em>69th vote</em> functions like a power‑of‑attorney embedded in governance. No change to core rules clears without it. A hostile ≥51% coalition cannot rewrite the covenant; capital may subscribe to cash flow, not to control.</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="card p-5 lg:col-span-3" id="why-zeno">
+      <h2 class="text-xl font-semibold mb-2">Why Zeno — Raison → Raisin</h2>
+      <p class="text-zinc-700 dark:text-zinc-200 mb-3">
+        The <em>raison d’être</em> (and yes, the raisin that comes from time on the vine) is to locate the limit of a <span class="font-semibold">51%‑proof algorithm</span>. Markets can ferment; governance must not. Zeno’s series models issuance as approach without breach: we move toward a boundary we never cross. Control remains a covenant, not a commodity.
+      </p>
+      <p class="text-zinc-700 dark:text-zinc-200 mb-3">
+        In practice: I sell <span class="font-semibold">49.99%</span> as <span class="font-semibold">68 tokens</span>. The <span class="font-semibold">69th vote</span> stays on file with the founder as a non‑transferable control right. Cash flow is shared; constitutional change is not for sale.
+      </p>
+
+      <h3 class="font-semibold mt-2">51%‑Proof Invariants</h3>
+      <ul class="list-disc pl-5 space-y-1 text-zinc-700 dark:text-zinc-200">
+        <li><span class="font-semibold">I1 — Equity Bound:</span> External float S satisfies S &lt; 0.5 at all times.</li>
+        <li><span class="font-semibold">I2 — Control Key:</span> Any rule change requires signature of the 69th key; absent it, proposals fail regardless of coalition size.</li>
+        <li><span class="font-semibold">I3 — Cash‑Flow Pro Rata:</span> Tokenholders share discounted cash flows per schedule; dividends pause while founder debt is cleared.</li>
+        <li><span class="font-semibold">I4 — Monotone Issuance:</span> Each round sells only from remaining external allocation; no round crosses the bound.</li>
+      </ul>
+
+      <h3 class="font-semibold mt-3">Issuance Schedule (Converging Series)</h3>
+      <p class="text-zinc-700 dark:text-zinc-200 mb-2">
+        Choose a proportion <span class="font-mono">0 &lt; λ &lt; 1</span>. Let <span class="font-mono">E_max = 0.4999</span> and <span class="font-mono">S_0 = 0</span>. Round <span class="font-mono">k</span> sells
+        <span class="font-mono">Δ_k = λ · (E_max − S_{k−1})</span>, so <span class="font-mono">S_k = E_max · (1 − (1−λ)^k)</span>.
+        As <span class="font-mono">k → ∞</span>, <span class="font-mono">S_k → E_max</span> without crossing it. This is Zeno in cap‑table form.
+      </p>
+
+      <pre class="p-3 rounded bg-zinc-50 dark:bg-zinc-800 overflow-auto text-sm"><code>// 51%-proof check (pseudocode)
+function canExecute(change) {
+  if (!sigByFounderControlKey(change)) return false; // 69th key required
+  if (externalFloat() >= 0.5) return false;         // invariant guard
+  return true;
+}
+
+// Zeno issuance (round k)
+function nextSellAmount(S_prev, E_max=0.4999, lambda=0.5) {
+  const remaining = E_max - S_prev;
+  return Math.max(0, lambda * remaining);
+}
+</code></pre>
+
+      <p class="text-zinc-700 dark:text-zinc-200 mt-2">
+        Philosophically: the series disciplines time preference. Early buyers purchase duration; later buyers join without forcing a cliff. Operationally: numbers lead (DOT/IRS rounded), stories follow. Sovereignty is maintained; value is shared.</p>
+    </section>
+
+    <footer class="site-footer">
+        <nav class="footer-nav">
+            <a  href="https://alaskamoves.us/index.html">
+                &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+                <br /></a>
+            <a href="https://alaskamoves.us/build/index.html">build</a>
+            <a href="https://alaskamoves.us/connect/index.html">connect</a>
+            <a href="https://alaskamoves.us/dispatch/index.html">dispatch</a>
+            <a href="https://alaskamoves.us/exchange/index.html">exchange</a>
+            <a href="https://alaskamoves.us/file/index.html">file</a>
+        </nav>
+    </footer>
+  </div>
+  </body>
+  </html>

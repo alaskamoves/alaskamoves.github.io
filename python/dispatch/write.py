@@ -53,8 +53,10 @@ BODY = """
 </footer>
 
 <footer class="site-footer">
-    &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
     <nav class="footer-nav">
+        <a  href="https://alaskamoves.us/index.html">
+            &copy; 2025 Alaska Transportation &amp; Trucking L.L.C.
+            <br /></a>
         <a href="https://alaskamoves.us/build/index.html">build</a>
         <a href="https://alaskamoves.us/connect/index.html">connect</a>
         <a href="https://alaskamoves.us/dispatch/index.html">dispatch</a>
@@ -88,12 +90,12 @@ html = f"""<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <title>{TITLE}</title>
-  <link rel="stylesheet" href="https://alaskamoves.us/styles/dispatch.css">
+  <link rel="stylesheet" href="https://alaskamoves.us/styles/css/dispatch.css">
 </head>
 <body>
   <h1>{TITLE}</h1>
   <h3>{SUBTITLE}</h3>
-  <p>published: {date}</p>
+  <p>Published: {date}</p>
   <hr />
   {BODY}
 </body>
